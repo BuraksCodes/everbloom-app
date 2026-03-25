@@ -1,0 +1,37 @@
+# Xcode
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+DerivedData/
+*.ipa
+*.dSYM.zip
+*.dSYM
+build/
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Swift Package Manager
+.build/
+*.resolved
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# Environment / secrets
+.env
+*.env
+secrets.json
+
+# Node / Cloudflare Worker
+backend/node_modules/
+backend/.wrangler/
+
+# TestFlight / Archives
+*.xcarchive

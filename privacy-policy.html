@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Everbloom – Privacy Policy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple:     #7B5EA7;
+      --purple-light: #9B7CC7;
+      --purple-pale: #F3EEF9;
+      --peach:      #F7D9CE;
+      --text:       #1E1B2E;
+      --subtext:    #6B6480;
+      --border:     #E8E0F2;
+      --white:      #FFFFFF;
+      --bg:         #FAF8FD;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Hero Header ───────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #F3EEF9 0%, #EAF0FB 50%, #F9EEF3 100%);
+      padding: 64px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(123,94,167,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(247,217,206,0.5) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-inner { position: relative; z-index: 1; }
+
+    .logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-wrap img {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(123,94,167,0.22), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--purple), var(--purple-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--subtext);
+      font-weight: 400;
+    }
+
+    .hero-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      color: var(--subtext);
+      backdrop-filter: blur(8px);
+    }
+
+    .dot {
+      width: 6px; height: 6px;
+      background: #5CC678;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ── Layout ────────────────────────────────────────────────────── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Intro card ─────────────────────────────────────────────────── */
+    .intro-card {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+      border-radius: 20px;
+      padding: 28px 32px;
+      color: white;
+      margin-bottom: 40px;
+      box-shadow: 0 8px 32px rgba(123,94,167,0.25);
+    }
+
+    .intro-card p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      opacity: 0.95;
+      margin: 0;
+    }
+
+    /* ── Sections ───────────────────────────────────────────────────── */
+    .section {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(123,94,167,0.05);
+      transition: box-shadow 0.2s;
+    }
+
+    .section:hover {
+      box-shadow: 0 4px 24px rgba(123,94,167,0.10);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--purple-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .section h2 {
+      font-size: 1.05rem;
+      font-weight: 650;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .section p {
+      color: var(--subtext);
+      font-size: 0.93rem;
+      margin-bottom: 12px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    /* ── Lists ──────────────────────────────────────────────────────── */
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--subtext);
+      font-size: 0.93rem;
+    }
+
+    .list li:last-child { border-bottom: none; }
+
+    .list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--purple-light);
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .list li strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Third-party grid ───────────────────────────────────────────── */
+    .third-party-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 540px) {
+      .third-party-grid { grid-template-columns: 1fr; }
+    }
+
+    .tp-card {
+      background: var(--purple-pale);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .tp-card strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 650;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .tp-card p {
+      font-size: 0.82rem;
+      color: var(--subtext);
+      margin: 0 0 8px;
+    }
+
+    .tp-card a {
+      font-size: 0.78rem;
+      color: var(--purple);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .tp-card a:hover { text-decoration: underline; }
+
+    /* ── Highlight box ──────────────────────────────────────────────── */
+    .highlight {
+      background: #FFF3F0;
+      border: 1px solid #FFD5C8;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      color: #C0523A;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .highlight strong { color: #A83E28; }
+
+    /* ── Contact card ───────────────────────────────────────────────── */
+    .contact-card {
+      background: linear-gradient(135deg, #F3EEF9, #EAF0FB);
+      border-radius: 16px;
+      padding: 24px 28px;
+      border: 1px solid var(--border);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .contact-card p { color: var(--subtext); font-size: 0.9rem; margin-bottom: 10px; }
+
+    .contact-email {
+      display: inline-block;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 8px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--purple);
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(123,94,167,0.08);
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 0 24px 48px;
+      color: var(--subtext);
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* ── Links ──────────────────────────────────────────────────────── */
+    a { color: var(--purple); }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="logo-wrap">
+        <img src="everbloom-logo.png" alt="Everbloom logo" />
+      </div>
+      <h1>Everbloom <span>Privacy Policy</span></h1>
+      <p class="hero-subtitle">Anxiety & Panic Support App</p>
+      <div class="hero-meta">
+        <span class="dot"></span>
+        Effective date: March 22, 2026
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Intro -->
+    <div class="intro-card">
+      <p>
+        Your privacy matters deeply to us. Everbloom is built for moments of vulnerability —
+        and we take that responsibility seriously. This policy explains clearly and honestly
+        what data we collect, how we use it, and what we never do with it.
+      </p>
+    </div>
+
+    <!-- 1. Information We Collect -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <h2>Information We Collect</h2>
+      </div>
+      <ul class="list">
+        <li><span><strong>Account information:</strong> Your email address and display name, collected when you sign up via Firebase Authentication.</span></li>
+        <li><span><strong>Journal entries:</strong> Text you write in the app. Stored privately in your Firebase account — only you can access them.</span></li>
+        <li><span><strong>Mood check-ins:</strong> Daily mood ratings and optional notes you log. Stored in your Firebase account.</span></li>
+        <li><span><strong>Profile photo:</strong> Stored locally on your device only. Never uploaded to our servers.</span></li>
+        <li><span><strong>Anonymous usage data:</strong> Crash reports to help us fix bugs. No personally identifiable information is included.</span></li>
+      </ul>
+    </div>
+
+    <!-- 2. What We Never Do -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🚫</div>
+        <h2>What We Never Do</h2>
+      </div>
+      <ul class="list">
+        <li><span>We never sell your data to third parties.</span></li>
+        <li><span>We never share your journal entries or mood data with anyone.</span></li>
+        <li><span>We never collect precise location data.</span></li>
+        <li><span>We never use your data for advertising.</span></li>
+        <li><span>We never read or store your Bloom AI conversations on our servers.</span></li>
+      </ul>
+    </div>
+
+    <!-- 3. How We Use Your Information -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">💡</div>
+        <h2>How We Use Your Information</h2>
+      </div>
+      <ul class="list">
+        <li><span>To personalize your experience (greetings, mood history, journal).</span></li>
+        <li><span>To send optional reminder notifications — only if you enable them.</span></li>
+        <li><span>To process subscription purchases via Apple's App Store and RevenueCat.</span></li>
+        <li><span>To respond to support requests if you contact us.</span></li>
+      </ul>
+    </div>
+
+    <!-- 4. Third-Party Services -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🔗</div>
+        <h2>Third-Party Services</h2>
+      </div>
+      <p style="margin-bottom:16px;">Everbloom uses the following trusted services to power its features:</p>
+      <div class="third-party-grid">
+        <div class="tp-card">
+          <strong>Firebase (Google)</strong>
+          <p>Authentication and secure cloud storage for your account data.</p>
+          <a href="https://firebase.google.com/support/privacy" target="_blank">Privacy Policy →</a>
+        </div>
+        <div class="tp-card">
+          <strong>RevenueCat</strong>
+          <p>Subscription management and purchase verification.</p>
+          <a href="https://www.revenuecat.com/privacy" target="_blank">Privacy Policy →</a>
+        </div>
+        <div class="tp-card">
+          <strong>OpenAI</strong>
+          <p>Powers the Bloom AI chat. Messages are sent for processing but not stored by us.</p>
+          <a href="https://openai.com/privacy" target="_blank">Privacy Policy →</a>
+        </div>
+        <div class="tp-card">
+          <strong>Google Places API</strong>
+          <p>Shows nearby therapists in the Therapist Finder. Only used with your permission.</p>
+          <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Data Storage & Security -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🔒</div>
+        <h2>Data Storage &amp; Security</h2>
+      </div>
+      <p>
+        Your data is stored securely using Firebase's infrastructure, protected by Firebase
+        security rules so only you can access your own data. We use industry-standard
+        encryption for all data in transit and at rest.
+      </p>
+      <p>
+        Your profile photo is stored only on your device and is never uploaded to any server.
+      </p>
+    </div>
+
+    <!-- 6. Data Deletion -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🗑️</div>
+        <h2>Data Deletion</h2>
+      </div>
+      <p>
+        You can delete your account at any time from within the app:
+        <strong>Profile → Delete Account</strong>.
+      </p>
+      <div class="highlight">
+        <strong>⚠️ This action is permanent.</strong> Deleting your account removes all journal entries,
+        mood history, and account information immediately and cannot be undone.
+      </div>
+    </div>
+
+    <!-- 7. Children's Privacy -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">👶</div>
+        <h2>Children's Privacy</h2>
+      </div>
+      <p>
+        Everbloom is not intended for children under 13. We do not knowingly collect personal
+        information from children under 13. If you believe a child has provided us with personal
+        information, please contact us immediately and we will delete it promptly.
+      </p>
+    </div>
+
+    <!-- 8. Your Rights -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <h2>Your Rights</h2>
+      </div>
+      <ul class="list">
+        <li><span>Access the personal data we hold about you.</span></li>
+        <li><span>Request correction of inaccurate data.</span></li>
+        <li><span>Request deletion of your data via the in-app account deletion feature.</span></li>
+        <li><span>Opt out of notifications at any time in your device Settings.</span></li>
+      </ul>
+    </div>
+
+    <!-- 9. Changes -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">📝</div>
+        <h2>Changes to This Policy</h2>
+      </div>
+      <p>
+        We may update this Privacy Policy from time to time. We will notify you of significant
+        changes by updating the effective date at the top of this page. Continued use of the
+        app after changes constitutes acceptance of the updated policy.
+      </p>
+    </div>
+
+    <!-- 10. Contact -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">✉️</div>
+        <h2>Contact Us</h2>
+      </div>
+      <div class="contact-card">
+        <p>Questions about this policy or how we handle your data? We'd love to hear from you.</p>
+        <a href="mailto:burakcak2000@gmail.com" class="contact-email">burakcak2000@gmail.com</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 Everbloom. All rights reserved. Made with care for your mental wellbeing.</p>
+  </footer>
+
+</body>
+</html>

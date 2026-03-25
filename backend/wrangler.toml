@@ -1,0 +1,17 @@
+name            = "everbloom-api"
+main            = "worker.js"
+compatibility_date = "2025-01-01"
+
+# Secrets are NOT stored here — they are set once via the CLI and stored
+# encrypted in Cloudflare's infrastructure:
+#
+#   wrangler secret put OPENAI_API_KEY
+#   wrangler secret put APP_TOKEN
+#
+# To view which secrets exist (without revealing values):
+#   wrangler secret list
+#
+# The worker is free on Cloudflare's free tier:
+#   • 100,000 requests/day
+#   • 10ms CPU per request
+#   Both are more than enough for a mental health app.

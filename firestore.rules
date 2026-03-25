@@ -1,0 +1,71 @@
+// firestore.rules
+// Everbloom — Firestore Security Rules
+//
+// Deploy with:
+//   firebase deploy --only firestore:rules
+//
+// These rules ensure every user can only read and write their own data.
+// Nobody else — including other authenticated users — can access a user's
+// journal entries, mood logs, or profile settings.
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper: is the caller authenticated? ──────────────────────────────
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    // ── Helper: is the caller the owner of this document? ─────────────────
+    function isOwner(uid) {
+      return isAuth() && request.auth.uid == uid;
+    }
+
+    // ── Per-user data root: /users/{userId}/ ──────────────────────────────
+    // Each user document and every sub-collection inside it is
+    // only accessible to that user. No admin back-door — keep it simple
+    // for now and add server-side admin SDK access later if needed.
+
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      // Journal entries
+      match /journal/{entryId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Mood / check-in logs
+      match /moods/{moodId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Breathing session history
+      match /breathingSessions/{sessionId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Meditation session history
+      match /meditationSessions/{sessionId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // App settings / preferences synced to cloud
+      match /settings/{settingId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Catch-all for any other sub-collections added in the future
+      match /{subcollection}/{docId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // ── Deny everything else by default ───────────────────────────────────
+    // Firestore denies access unless a rule explicitly allows it,
+    // but this makes the intent explicit.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

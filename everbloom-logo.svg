@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0E8FA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E8F0FB;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Petal gradients -->
+    <radialGradient id="petalPink" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#FADADD;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F4A7B9;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="petalLavender" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#E8DCFA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C9AEF0;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="petalSage" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#CCE8D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#97C9A8;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="petalPeach" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#FDDDD0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F8B49A;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="petalSky" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#CCE8FA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8FC7EF;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Center gradient -->
+    <radialGradient id="centerGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" style="stop-color:#FFF5E0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F9D98A;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="16" flood-color="#C9AEF0" flood-opacity="0.3"/>
+    </filter>
+
+    <!-- Petal shape clip -->
+    <clipPath id="roundedSquare">
+      <rect x="60" y="60" width="904" height="904" rx="220" ry="220"/>
+    </clipPath>
+  </defs>
+
+  <!-- App icon rounded rect background -->
+  <rect x="60" y="60" width="904" height="904" rx="220" ry="220" fill="url(#bgGrad)" />
+
+  <!-- Subtle background ring -->
+  <circle cx="512" cy="490" r="320" fill="none" stroke="#D9CCF2" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="512" cy="490" r="260" fill="none" stroke="#D9CCF2" stroke-width="1" opacity="0.35"/>
+
+  <!-- ═══ FLOWER PETALS (5 petals, rotated around center) ═══ -->
+
+  <!-- Petal 1 — Top (Pink) -->
+  <g transform="translate(512,490) rotate(0)">
+    <ellipse cx="0" cy="-170" rx="68" ry="110" fill="url(#petalPink)" opacity="0.95" filter="url(#shadow)"/>
+    <ellipse cx="0" cy="-170" rx="40" ry="70" fill="white" opacity="0.25"/>
+  </g>
+
+  <!-- Petal 2 — Top Right (Lavender) -->
+  <g transform="translate(512,490) rotate(72)">
+    <ellipse cx="0" cy="-170" rx="68" ry="110" fill="url(#petalLavender)" opacity="0.95" filter="url(#shadow)"/>
+    <ellipse cx="0" cy="-170" rx="40" ry="70" fill="white" opacity="0.25"/>
+  </g>
+
+  <!-- Petal 3 — Bottom Right (Sage) -->
+  <g transform="translate(512,490) rotate(144)">
+    <ellipse cx="0" cy="-170" rx="68" ry="110" fill="url(#petalSage)" opacity="0.95" filter="url(#shadow)"/>
+    <ellipse cx="0" cy="-170" rx="40" ry="70" fill="white" opacity="0.25"/>
+  </g>
+
+  <!-- Petal 4 — Bottom Left (Peach) -->
+  <g transform="translate(512,490) rotate(216)">
+    <ellipse cx="0" cy="-170" rx="68" ry="110" fill="url(#petalPeach)" opacity="0.95" filter="url(#shadow)"/>
+    <ellipse cx="0" cy="-170" rx="40" ry="70" fill="white" opacity="0.25"/>
+  </g>
+
+  <!-- Petal 5 — Top Left (Sky) -->
+  <g transform="translate(512,490) rotate(288)">
+    <ellipse cx="0" cy="-170" rx="68" ry="110" fill="url(#petalSky)" opacity="0.95" filter="url(#shadow)"/>
+    <ellipse cx="0" cy="-170" rx="40" ry="70" fill="white" opacity="0.25"/>
+  </g>
+
+  <!-- ═══ INNER RING OF SMALL ACCENT PETALS ═══ -->
+  <g transform="translate(512,490) rotate(36)">
+    <ellipse cx="0" cy="-100" rx="28" ry="48" fill="#F4A7B9" opacity="0.55"/>
+  </g>
+  <g transform="translate(512,490) rotate(108)">
+    <ellipse cx="0" cy="-100" rx="28" ry="48" fill="#C9AEF0" opacity="0.55"/>
+  </g>
+  <g transform="translate(512,490) rotate(180)">
+    <ellipse cx="0" cy="-100" rx="28" ry="48" fill="#97C9A8" opacity="0.55"/>
+  </g>
+  <g transform="translate(512,490) rotate(252)">
+    <ellipse cx="0" cy="-100" rx="28" ry="48" fill="#F8B49A" opacity="0.55"/>
+  </g>
+  <g transform="translate(512,490) rotate(324)">
+    <ellipse cx="0" cy="-100" rx="28" ry="48" fill="#8FC7EF" opacity="0.55"/>
+  </g>
+
+  <!-- ═══ CENTER ═══ -->
+  <!-- Outer center ring -->
+  <circle cx="512" cy="490" r="72" fill="white" opacity="0.6"/>
+  <!-- Center circle -->
+  <circle cx="512" cy="490" r="58" fill="url(#centerGrad)" filter="url(#glow)"/>
+  <!-- Center shimmer -->
+  <circle cx="512" cy="490" r="58" fill="none" stroke="white" stroke-width="3" opacity="0.7"/>
+  <!-- Small center dot -->
+  <circle cx="512" cy="490" r="18" fill="white" opacity="0.8"/>
+
+  <!-- ═══ STAMENS (small dots radiating from center) ═══ -->
+  <g fill="#F4A7B9" opacity="0.9">
+    <circle cx="512" cy="432" r="5"/>
+    <circle cx="554" cy="448" r="5"/>
+    <circle cx="566" cy="492" r="5"/>
+    <circle cx="546" cy="532" r="5"/>
+    <circle cx="512" cy="548" r="5"/>
+    <circle cx="478" cy="532" r="5"/>
+    <circle cx="458" cy="492" r="5"/>
+    <circle cx="470" cy="448" r="5"/>
+  </g>
+
+  <!-- ═══ WORDMARK ═══ -->
+  <text
+    x="512"
+    y="680"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="62"
+    font-weight="400"
+    letter-spacing="6"
+    fill="#6B4F9E"
+    opacity="0.92"
+  >Everbloom</text>
+
+  <!-- Tagline -->
+  <text
+    x="512"
+    y="720"
+    text-anchor="middle"
+    font-family="Georgia, serif"
+    font-size="26"
+    font-weight="300"
+    letter-spacing="4"
+    fill="#9B80C8"
+    opacity="0.75"
+  >calm · breathe · bloom</text>
+
+  <!-- Decorative line under wordmark -->
+  <line x1="362" y1="735" x2="662" y2="735" stroke="#C9AEF0" stroke-width="1.5" opacity="0.6"/>
+
+</svg>
