@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Does the app track users across apps/websites for advertising? -->
+    <key>NSPrivacyTracking</key>
+    <false/>
+
+    <!-- Tracking domains (empty — no ad tracking) -->
+    <key>NSPrivacyTrackingDomains</key>
+    <array/>
+
+    <!-- APIs that require a declared reason (Apple required list) -->
+    <key>NSPrivacyAccessedAPITypes</key>
+    <array>
+
+        <!-- UserDefaults — used by @AppStorage for voice preference,
+             notification toggles, and subscription status              -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <!-- CA92.1: Access info from same app that wrote it -->
+                <string>CA92.1</string>
+            </array>
+        </dict>
+
+        <!-- File timestamp APIs — AVAudioPlayer / AVAudioEngine read
+             file metadata when loading ambient MP3 tracks             -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <!-- C617.1: Access timestamps of files created by the app -->
+                <string>C617.1</string>
+            </array>
+        </dict>
+
+        <!-- System boot time — used internally by AVFoundation timing -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategorySystemBootTime</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <!-- 35F9.1: Measure elapsed time without sending to server -->
+                <string>35F9.1</string>
+            </array>
+        </dict>
+
+    </array>
+
+    <!-- Data collected from the user (shown in App Store privacy label) -->
+    <key>NSPrivacyCollectedDataTypes</key>
+    <array>
+
+        <!-- Email address — collected for account creation / sign-in -->
+        <dict>
+            <key>NSPrivacyCollectedDataType</key>
+            <string>NSPrivacyCollectedDataTypeEmailAddress</string>
+            <key>NSPrivacyCollectedDataTypeLinked</key>
+            <true/>
+            <key>NSPrivacyCollectedDataTypeTracking</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypePurposes</key>
+            <array>
+                <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+            </array>
+        </dict>
+
+        <!-- Health & fitness — mood check-ins, journal entries -->
+        <dict>
+            <key>NSPrivacyCollectedDataType</key>
+            <string>NSPrivacyCollectedDataTypeHealth</string>
+            <key>NSPrivacyCollectedDataTypeLinked</key>
+            <true/>
+            <key>NSPrivacyCollectedDataTypeTracking</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypePurposes</key>
+            <array>
+                <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+            </array>
+        </dict>
+
+        <!-- Precise location — therapist finder (when-in-use only) -->
+        <dict>
+            <key>NSPrivacyCollectedDataType</key>
+            <string>NSPrivacyCollectedDataTypePreciseLocation</string>
+            <key>NSPrivacyCollectedDataTypeLinked</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypeTracking</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypePurposes</key>
+            <array>
+                <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+            </array>
+        </dict>
+
+    </array>
+</dict>
+</plist>
