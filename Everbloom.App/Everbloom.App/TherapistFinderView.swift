@@ -133,9 +133,11 @@ final class TherapistFinderViewModel {
     var genderFilter:    GenderFilter = .any
 
     // Manual location search
-    var locationQuery:   String  = ""
-    var isGeocoding:     Bool    = false
-    var useManualSearch: Bool    = false
+    var locationQuery:      String  = ""
+    var isGeocoding:        Bool    = false
+    var useManualSearch:    Bool    = false
+    /// Set when user picks a whole country — appended to the Places text query
+    var searchCountryContext: String = ""
 
     // Detail cache
     var detailCache:      [String: TherapistDetail] = [:]
@@ -207,7 +209,7 @@ final class TherapistFinderViewModel {
     // MARK: - Manual Location Search (city, address, country)
 
     @MainActor
-    func searchByAddress() async {
+    func searchByAddress(countryOnly: Bool = false) async {
         let query = locationQuery.trimmingCharacters(in: .whitespaces)
         guard !query.isEmpty else { requestLocation(); return }
 
@@ -231,6 +233,15 @@ final class TherapistFinderViewModel {
             let parts   = [city, region, country].filter { !$0.isEmpty }
             currentLocationLabel = parts.prefix(2).joined(separator: ", ")
 
+            // When searching a whole country, embed the country name in the Places
+            // query so Google searches across the entire country — not just the
+            // geocoded centre point with a small radius.
+            if countryOnly, let countryName = first.country {
+                searchCountryContext = countryName
+            } else {
+                searchCountryContext = ""
+            }
+
             await searchTherapists(near: loc.coordinate)
         } catch {
             errorMessage = "Address not found: \(error.localizedDescription)"
@@ -246,7 +257,14 @@ final class TherapistFinderViewModel {
         defer { isLoading = false }
 
         let urlString = "https://places.googleapis.com/v1/places:searchText"
-        let query = "\(genderFilter.queryModifier)therapist psychologist psychiatrist counselor mental health"
+        // When a country is selected, append it to the query so Google searches
+        // across the whole country rather than just the geocoded centre point.
+        let countryContext = searchCountryContext.isEmpty ? "" : " in \(searchCountryContext)"
+        let baseQuery = "\(genderFilter.queryModifier)therapist psychologist psychiatrist counselor mental health"
+        let query = baseQuery + countryContext
+        // Country-level searches use the maximum Places API radius (50 km) so we
+        // get results spread across the country's major cities, not just one spot.
+        let searchRadius = searchCountryContext.isEmpty ? radiusOption.meters : 50_000.0
         let placesBody: [String: Any] = [
             "textQuery":      query,
             "maxResultCount": 20,
@@ -254,7 +272,7 @@ final class TherapistFinderViewModel {
             "locationBias": [
                 "circle": [
                     "center": ["latitude": coord.latitude, "longitude": coord.longitude],
-                    "radius": radiusOption.meters
+                    "radius": searchRadius
                 ]
             ]
         ]
@@ -490,10 +508,11 @@ struct TherapistFinderView: View {
                 // If "All Countries", let GPS take over; otherwise geocode the chosen country
                 if country == "All Countries" {
                     vm.locationQuery = ""
+                    vm.searchCountryContext = ""
                     vm.requestLocation()
                 } else {
                     vm.locationQuery = country
-                    Task { await vm.searchByAddress() }
+                    Task { await vm.searchByAddress(countryOnly: true) }
                 }
             }
         }
@@ -579,6 +598,7 @@ struct TherapistFinderView: View {
             if !vm.locationQuery.isEmpty {
                 Button {
                     vm.locationQuery = ""
+                    vm.searchCountryContext = ""
                     vm.requestLocation()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
@@ -590,6 +610,7 @@ struct TherapistFinderView: View {
             // GPS button
             Button {
                 vm.locationQuery = ""
+                vm.searchCountryContext = ""
                 vm.requestLocation()
             } label: {
                 Image(systemName: "location.fill")

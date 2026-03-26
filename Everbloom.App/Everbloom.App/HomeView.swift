@@ -466,7 +466,7 @@ struct HomeView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
                 FeatureCard(
                     title: "Breathe",
-                    subtitle: "6 techniques",
+                    subtitle: "\(BreathingTechnique.all.count) techniques",
                     icon: "wind",
                     gradient: LinearGradient(
                         colors: [Color(red: 0.70, green: 0.83, blue: 0.97), Color(red: 0.78, green: 0.70, blue: 0.96)],
