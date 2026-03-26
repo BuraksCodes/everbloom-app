@@ -128,8 +128,11 @@ struct MeditationLibraryView: View {
     // MARK: - Featured Banner (Quick 3-min session)
 
     private var featuredBanner: some View {
-        let session = MeditationLibrary.sessions.first(where: { $0.durationMinutes == 3 })!
-        return Button { selectedSession = session } label: {
+        guard let session = MeditationLibrary.sessions.first(where: { $0.durationMinutes == 3 })
+                         ?? MeditationLibrary.sessions.first else {
+            return AnyView(EmptyView())
+        }
+        return AnyView(Button { selectedSession = session } label: {
             ZStack(alignment: .leading) {
                 // Gradient background
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
@@ -195,6 +198,7 @@ struct MeditationLibraryView: View {
             .frame(height: 104)
         }
         .buttonStyle(MeditationCardButtonStyle())
+        )
     }
 }
 

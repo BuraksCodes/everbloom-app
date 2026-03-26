@@ -258,7 +258,9 @@ struct MeditationSessionView: View {
             }
         }
         .onAppear {
-            currentStepID = session.steps[0].id
+            if let firstStep = session.steps.first {
+                currentStepID = firstStep.id
+            }
             withAnimation(.spring(response: 0.7, dampingFraction: 0.72).delay(0.15)) {
                 appeared = true
             }
@@ -272,8 +274,8 @@ struct MeditationSessionView: View {
             }
             // Speak the intro after a short beat so the orb animation settles first
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                guard isPlaying, !isVoiceMuted else { return }
-                voiceCoach.speak(session.steps[0].text, voice: voiceGender)
+                guard isPlaying, !isVoiceMuted, let firstText = session.steps.first?.text else { return }
+                voiceCoach.speak(firstText, voice: voiceGender)
             }
         }
         .onDisappear {
@@ -724,7 +726,9 @@ struct MeditationSessionView: View {
         }
         elapsedSeconds = 0
         isPlaying      = true
-        currentStepID  = session.steps[0].id
+        if let firstStep = session.steps.first {
+            currentStepID = firstStep.id
+        }
         withAnimation(.easeIn(duration: 0.4)) {
             guidanceOpacity = 1
         }
@@ -736,8 +740,8 @@ struct MeditationSessionView: View {
             startAmbient()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            guard isPlaying, !isVoiceMuted else { return }
-            voiceCoach.speak(session.steps[0].text, voice: voiceGender)
+            guard isPlaying, !isVoiceMuted, let firstText = session.steps.first?.text else { return }
+            voiceCoach.speak(firstText, voice: voiceGender)
         }
     }
 

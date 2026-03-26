@@ -339,7 +339,7 @@ struct BreathingSessionView: View {
                 runPhase()
             }
         }
-        .onDisappear { sessionTimer?.invalidate() }
+        .onDisappear { sessionTimer?.invalidate(); sessionTimer = nil }
     }
 
     // MARK: - Session View
@@ -351,6 +351,7 @@ struct BreathingSessionView: View {
             HStack {
                 Button {
                     sessionTimer?.invalidate()
+                    sessionTimer = nil
                     isPresented = false
                 } label: {
                     Image(systemName: "xmark.circle.fill")

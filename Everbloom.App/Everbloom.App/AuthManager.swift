@@ -116,6 +116,29 @@ class AuthManager: ObservableObject {
 
     // Holds the current nonce for Apple sign-in (must persist across async call)
     private var currentNonce: String?
+    // Retained for the lifetime of the auth request
+    private var appleSignInCoordinator: AppleSignInCoordinator?
+
+    /// Triggers Apple Sign In using ASAuthorizationController with an explicit
+    /// window anchor — required for correct behaviour on iPad where SwiftUI's
+    /// SignInWithAppleButton can silently fail to present the sheet.
+    @MainActor
+    func startAppleSignIn() {
+        let nonce = randomNonceString()
+        currentNonce = nonce
+
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
+
+        let coordinator = AppleSignInCoordinator(authManager: self)
+        appleSignInCoordinator = coordinator
+
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = coordinator
+        controller.presentationContextProvider = coordinator
+        controller.performRequests()
+    }
 
     @MainActor
     func handleAppleSignIn(_ authorization: ASAuthorization) async {
@@ -152,6 +175,7 @@ class AuthManager: ObservableObject {
         return sha256(nonce)
     }
 
+
     // MARK: - Nonce Helpers
 
     private func randomNonceString(length: Int = 32) -> String {
@@ -161,7 +185,11 @@ class AuthManager: ObservableObject {
         while remainingLength > 0 {
             var randoms = [UInt8](repeating: 0, count: 16)
             let status = SecRandomCopyBytes(kSecRandomDefault, randoms.count, &randoms)
-            if status != errSecSuccess { fatalError("Unable to generate nonce: \(status)") }
+            guard status == errSecSuccess else {
+                // SecRandomCopyBytes failure is extremely rare; surface as auth error rather than crashing
+                errorMessage = "Could not generate a secure token — please try again."
+                return result
+            }
             randoms.forEach { random in
                 if remainingLength == 0 { return }
                 if random < charset.count {
@@ -181,6 +209,7 @@ class AuthManager: ObservableObject {
 
     // MARK: - Error Messages
 
+
     private func friendlyError(_ error: Error) -> String {
         let nsError = error as NSError
         guard let code = AuthErrorCode(rawValue: nsError.code) else {
@@ -195,6 +224,53 @@ class AuthManager: ObservableObject {
         case .networkError:           return "Network error — please check your connection."
         case .tooManyRequests:        return "Too many attempts. Please wait a moment."
         default:                      return error.localizedDescription
+        }
+    }
+}
+
+// MARK: - Apple Sign In Coordinator
+
+/// Handles ASAuthorizationController delegate + presentation context.
+/// Providing an explicit window anchor fixes the silent failure on iPad where
+/// SwiftUI's SignInWithAppleButton cannot resolve a presentation context when
+/// rendered inside a ScrollView.
+final class AppleSignInCoordinator: NSObject,
+                                    ASAuthorizationControllerDelegate,
+                                    ASAuthorizationControllerPresentationContextProviding {
+
+    weak var authManager: AuthManager?
+
+    init(authManager: AuthManager) {
+        self.authManager = authManager
+    }
+
+    // ── Presentation context ──────────────────────────────────────────────────
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        // Find the foreground active window scene and return its key window.
+        // Falls back to any available window so the sheet always has an anchor.
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+        let active = scenes.first(where: { $0.activationState == .foregroundActive }) ?? scenes.first
+        return active?.windows.first(where: { $0.isKeyWindow })
+            ?? active?.windows.first
+            ?? UIWindow()
+    }
+
+    // ── Success ───────────────────────────────────────────────────────────────
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization) {
+        Task { @MainActor in
+            await authManager?.handleAppleSignIn(authorization)
+        }
+    }
+
+    // ── Failure ───────────────────────────────────────────────────────────────
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithError error: Error) {
+        // Ignore user-cancelled — only surface real errors
+        guard (error as NSError).code != ASAuthorizationError.canceled.rawValue else { return }
+        Task { @MainActor in
+            authManager?.errorMessage = "Apple Sign In failed — please try again."
         }
     }
 }

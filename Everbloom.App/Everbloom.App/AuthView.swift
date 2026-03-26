@@ -220,23 +220,11 @@ struct AuthView: View {
             }
 
             // Sign in with Apple
-            SignInWithAppleButton(
-                mode == .signIn ? .signIn : .signUp
-            ) { request in
-                let hashedNonce = authManager.prepareAppleSignIn()
-                request.requestedScopes = [.fullName, .email]
-                request.nonce = hashedNonce
-            } onCompletion: { result in
-                switch result {
-                case .success(let auth):
-                    Task { await authManager.handleAppleSignIn(auth) }
-                case .failure(let error):
-                    #if DEBUG
-                    print("Apple Sign In error: \(error)")
-                    #endif
-                }
+            // Uses ASAuthorizationController directly (via AuthManager.startAppleSignIn)
+            // so the presentation anchor is always resolved — fixes silent failure on iPad.
+            AppleSignInButtonRepresentable(isSignUp: mode == .signUp) {
+                authManager.startAppleSignIn()
             }
-            .signInWithAppleButtonStyle(.black)
             .frame(height: 50)
             .cornerRadius(14)
         }
@@ -343,6 +331,39 @@ struct ZenSecureField: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.zenLavender.opacity(0.5), lineWidth: 1)
         )
+    }
+}
+
+// MARK: - Apple Sign In Button (UIViewRepresentable)
+
+/// Wraps ASAuthorizationAppleIDButton so the button style matches Apple's
+/// guidelines while the actual auth flow runs through AuthManager.startAppleSignIn(),
+/// which provides an explicit window anchor — necessary on iPad.
+struct AppleSignInButtonRepresentable: UIViewRepresentable {
+    var isSignUp: Bool
+    var action: () -> Void
+
+    func makeCoordinator() -> Coordinator { Coordinator(action: action) }
+
+    func makeUIView(context: Context) -> ASAuthorizationAppleIDButton {
+        let type: ASAuthorizationAppleIDButton.ButtonType = isSignUp ? .signUp : .signIn
+        let button = ASAuthorizationAppleIDButton(authorizationButtonType: type,
+                                                  authorizationButtonStyle: .black)
+        button.cornerRadius = 14
+        button.addTarget(context.coordinator,
+                         action: #selector(Coordinator.tapped),
+                         for: .touchUpInside)
+        return button
+    }
+
+    func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {
+        context.coordinator.action = action
+    }
+
+    final class Coordinator: NSObject {
+        var action: () -> Void
+        init(action: @escaping () -> Void) { self.action = action }
+        @objc func tapped() { action() }
     }
 }
 
