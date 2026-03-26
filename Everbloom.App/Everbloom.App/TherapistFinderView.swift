@@ -409,12 +409,31 @@ struct PlacePhotoView: View {
 
 // MARK: - Main View
 
+// MARK: - Country List
+
+private let therapistCountries: [String] = [
+    "Argentina", "Australia", "Austria", "Belgium", "Brazil", "Canada", "Chile",
+    "China", "Colombia", "Czech Republic", "Denmark", "Egypt", "Finland", "France",
+    "Germany", "Ghana", "Greece", "Hong Kong", "Hungary", "India", "Indonesia",
+    "Ireland", "Israel", "Italy", "Japan", "Kenya", "Malaysia", "Mexico",
+    "Netherlands", "New Zealand", "Nigeria", "Norway", "Pakistan", "Peru",
+    "Philippines", "Poland", "Portugal", "Romania", "Saudi Arabia", "Singapore",
+    "South Africa", "South Korea", "Spain", "Sweden", "Switzerland", "Taiwan",
+    "Thailand", "Turkey", "Ukraine", "United Arab Emirates", "United Kingdom",
+    "United States", "Uruguay", "Vietnam"
+]
+
+// MARK: - Main View
+
 struct TherapistFinderView: View {
     @EnvironmentObject var subscriptionManager: SubscriptionManager
     @Environment(\.dismiss) private var dismiss
-    @State private var vm       = TherapistFinderViewModel()
-    @State private var appeared = false
+    @State private var vm                  = TherapistFinderViewModel()
+    @State private var appeared            = false
     @State private var selected: TherapistResult? = nil
+    @State private var showingCountryPicker = false
+    @State private var countrySearchText    = ""
+    @State private var selectedCountry      = "All Countries"
 
     var body: some View {
         ZStack {
@@ -460,6 +479,24 @@ struct TherapistFinderView: View {
         .sheet(item: $selected) { t in
             TherapistDetailSheet(therapist: t, vm: vm)
         }
+        .sheet(isPresented: $showingCountryPicker) {
+            CountryPickerSheet(
+                selectedCountry: $selectedCountry,
+                searchText: $countrySearchText
+            ) { country in
+                selectedCountry = country
+                showingCountryPicker = false
+                countrySearchText = ""
+                // If "All Countries", let GPS take over; otherwise geocode the chosen country
+                if country == "All Countries" {
+                    vm.locationQuery = ""
+                    vm.requestLocation()
+                } else {
+                    vm.locationQuery = country
+                    Task { await vm.searchByAddress() }
+                }
+            }
+        }
     }
 
     // MARK: - Header
@@ -475,19 +512,26 @@ struct TherapistFinderView: View {
                 .foregroundColor(.zenPurple)
             }
             Spacer()
-            // Region badge — plain text, no emoji flags (they render as [?] on some devices)
-            HStack(spacing: 5) {
-                Image(systemName: "globe.americas.fill")
-                    .font(.system(size: 12))
-                    .foregroundColor(.zenPurple)
-                Text("US & Canada")
-                    .font(ZenFont.caption(11))
-                    .foregroundColor(.zenSubtext)
+            // Country picker button
+            Button { showingCountryPicker = true } label: {
+                HStack(spacing: 5) {
+                    Image(systemName: "globe")
+                        .font(.system(size: 12))
+                        .foregroundColor(.zenPurple)
+                    Text(selectedCountry)
+                        .font(ZenFont.caption(11))
+                        .foregroundColor(.zenSubtext)
+                        .lineLimit(1)
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 9, weight: .semibold))
+                        .foregroundColor(.zenSubtext)
+                }
+                .padding(.horizontal, 10).padding(.vertical, 5)
+                .background(Color.white.opacity(0.65))
+                .clipShape(Capsule())
+                .shadow(color: .zenDusk.opacity(0.06), radius: 4, x: 0, y: 1)
             }
-            .padding(.horizontal, 10).padding(.vertical, 5)
-            .background(Color.white.opacity(0.65))
-            .clipShape(Capsule())
-            .shadow(color: .zenDusk.opacity(0.06), radius: 4, x: 0, y: 1)
+            .buttonStyle(.plain)
 
             Image(systemName: "person.fill.checkmark")
                 .font(.system(size: 22, weight: .medium))
@@ -1031,6 +1075,56 @@ struct TherapistDetailSheet: View {
         }
         .padding(14).background(Color.white.opacity(0.72)).cornerRadius(12)
         .shadow(color: .zenDusk.opacity(0.04), radius: 4, x: 0, y: 1)
+    }
+}
+
+// MARK: - Country Picker Sheet
+
+struct CountryPickerSheet: View {
+    @Binding var selectedCountry: String
+    @Binding var searchText: String
+    let onSelect: (String) -> Void
+    @Environment(\.dismiss) private var dismiss
+
+    private var filteredCountries: [String] {
+        let all = ["All Countries"] + therapistCountries
+        guard !searchText.isEmpty else { return all }
+        return all.filter { $0.localizedCaseInsensitiveContains(searchText) }
+    }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(filteredCountries, id: \.self) { country in
+                    Button {
+                        onSelect(country)
+                    } label: {
+                        HStack {
+                            Text(country)
+                                .font(ZenFont.body(15))
+                                .foregroundColor(.zenText)
+                            Spacer()
+                            if country == selectedCountry {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.zenPurple)
+                                    .font(.system(size: 14, weight: .semibold))
+                            }
+                        }
+                    }
+                    .listRowBackground(Color.white.opacity(0.6))
+                }
+            }
+            .listStyle(.insetGrouped)
+            .searchable(text: $searchText, prompt: "Search country…")
+            .navigationTitle("Select Country")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") { dismiss() }
+                        .foregroundColor(.zenPurple)
+                }
+            }
+        }
     }
 }
 

@@ -15,7 +15,7 @@ struct HomeView: View {
     @State private var showMoodTracker     = false
     @State private var showMoodCheckIn     = false
     @State private var showCrisisResources = false
-    @State private var showMeditation      = false
+    @State private var showSounds          = false
 
     // MARK: - Computed
 
@@ -482,7 +482,7 @@ struct HomeView: View {
                         colors: [Color(red: 0.70, green: 0.90, blue: 0.80), Color(red: 0.70, green: 0.86, blue: 0.97)],
                         startPoint: .topLeading, endPoint: .bottomTrailing
                     )
-                ) { selectedTab = .sounds }
+                ) { showSounds = true }
 
                 FeatureCard(
                     title: "Journal",
@@ -512,11 +512,11 @@ struct HomeView: View {
                         colors: [Color(red: 0.62, green: 0.44, blue: 0.92), Color(red: 0.82, green: 0.68, blue: 1.00)],
                         startPoint: .topLeading, endPoint: .bottomTrailing
                     )
-                ) { showMeditation = true }
+                ) { selectedTab = .meditate }
             }
         }
-        .sheet(isPresented: $showMeditation) {
-            MeditationLibraryView()
+        .sheet(isPresented: $showSounds) {
+            SoundsView()
         }
     }
 

@@ -446,30 +446,28 @@ struct PanicButtonView: View {
             }
             .padding(.bottom, 28)
 
-            // ── Voice toggle (premium) ──────────────────────────────────
-            if subscriptionManager.isPremium {
-                HStack(spacing: 10) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "speaker.wave.2.fill")
-                            .font(.system(size: 11))
-                        Text("Voice guidance")
-                            .font(ZenFont.caption(12))
-                    }
-                    .foregroundColor(.white.opacity(0.55))
-
-                    HStack(spacing: 0) {
-                        voiceToggleButton(label: "♀", voice: APIProxy.voiceFemale, selected: voiceGender == APIProxy.voiceFemale)
-                        voiceToggleButton(label: "♂", voice: APIProxy.voiceMale,   selected: voiceGender == APIProxy.voiceMale)
-                    }
-                    .background(Color.white.opacity(0.12))
-                    .clipShape(Capsule())
+            // ── Voice toggle (free for all users) ──────────────────────
+            HStack(spacing: 10) {
+                HStack(spacing: 6) {
+                    Image(systemName: "speaker.wave.2.fill")
+                        .font(.system(size: 11))
+                    Text("Voice guidance")
+                        .font(ZenFont.caption(12))
                 }
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(Color.white.opacity(0.10))
+                .foregroundColor(.white.opacity(0.55))
+
+                HStack(spacing: 0) {
+                    voiceToggleButton(label: "♀", voice: APIProxy.voiceFemale, selected: voiceGender == APIProxy.voiceFemale)
+                    voiceToggleButton(label: "♂", voice: APIProxy.voiceMale,   selected: voiceGender == APIProxy.voiceMale)
+                }
+                .background(Color.white.opacity(0.12))
                 .clipShape(Capsule())
-                .padding(.bottom, 24)
             }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .background(Color.white.opacity(0.10))
+            .clipShape(Capsule())
+            .padding(.bottom, 24)
 
             Spacer()
 

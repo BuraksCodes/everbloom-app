@@ -1,10 +1,11 @@
 // BreathingView.swift
 // Everbloom — Anxiety & Panic Support App
-// Guided breathing exercises — 6 scientifically-backed techniques
+// Guided breathing exercises — 10 scientifically-backed techniques (6 free · 4 Pro)
 
 import SwiftUI
 
 struct BreathingView: View {
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
     @State private var selectedTechnique: BreathingTechnique = BreathingTechnique.box
     @State private var showingSession = false
     @State private var didAppear = false
@@ -57,13 +58,18 @@ struct BreathingView: View {
                         .padding(.horizontal, 20)
 
                     // Begin button
+                    let isCurrentLocked = selectedTechnique.isPro && !subscriptionManager.isPremium
                     Button {
-                        showingSession = true
+                        if isCurrentLocked {
+                            subscriptionManager.showingPaywall = true
+                        } else {
+                            showingSession = true
+                        }
                     } label: {
                         HStack(spacing: 10) {
-                            Image(systemName: "play.circle.fill")
+                            Image(systemName: isCurrentLocked ? "lock.fill" : "play.circle.fill")
                                 .font(.system(size: 20))
-                            Text("Begin Session")
+                            Text(isCurrentLocked ? "Unlock with Pro" : "Begin Session")
                                 .font(ZenFont.heading(17))
                         }
                         .foregroundColor(.white)
@@ -71,7 +77,9 @@ struct BreathingView: View {
                         .padding(.vertical, 17)
                         .background(
                             LinearGradient(
-                                colors: [.zenPurple, selectedTechnique.accentColor],
+                                colors: isCurrentLocked
+                                    ? [Color(red: 0.55, green: 0.40, blue: 0.75), Color(red: 0.65, green: 0.50, blue: 0.85)]
+                                    : [.zenPurple, selectedTechnique.accentColor],
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -102,14 +110,20 @@ struct BreathingView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(BreathingTechnique.all) { technique in
+                    let isLocked = technique.isPro && !subscriptionManager.isPremium
                     Button {
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
-                            selectedTechnique = technique
+                        if isLocked {
+                            subscriptionManager.showingPaywall = true
+                        } else {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                                selectedTechnique = technique
+                            }
                         }
                     } label: {
                         TechniquePillCard(
                             technique: technique,
-                            isSelected: selectedTechnique.id == technique.id
+                            isSelected: selectedTechnique.id == technique.id,
+                            isLocked: isLocked
                         )
                     }
                     .buttonStyle(.plain)
@@ -237,17 +251,30 @@ struct BreathingView: View {
 struct TechniquePillCard: View {
     let technique: BreathingTechnique
     let isSelected: Bool
+    var isLocked: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Technique icon
-            ZStack {
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(technique.accentColor.opacity(isSelected ? 0.30 : 0.18))
-                    .frame(width: 30, height: 30)
-                Image(systemName: technique.sfSymbol)
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(isSelected ? technique.accentColor : .zenSubtext)
+            // Technique icon with optional pro lock badge
+            ZStack(alignment: .topTrailing) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(technique.accentColor.opacity(isSelected ? 0.30 : 0.18))
+                        .frame(width: 30, height: 30)
+                    Image(systemName: technique.sfSymbol)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(isSelected ? technique.accentColor : .zenSubtext)
+                        .opacity(isLocked ? 0.5 : 1)
+                }
+                if isLocked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(3)
+                        .background(Color(red: 0.55, green: 0.40, blue: 0.75))
+                        .clipShape(Circle())
+                        .offset(x: 6, y: -6)
+                }
             }
 
             Text(technique.name
@@ -255,7 +282,7 @@ struct TechniquePillCard: View {
                 .replacingOccurrences(of: "Diaphragmatic", with: "Belly")
             )
             .font(ZenFont.heading(14))
-            .foregroundColor(isSelected ? .zenPurple : .zenText)
+            .foregroundColor(isLocked ? .zenSubtext : (isSelected ? .zenPurple : .zenText))
             .lineLimit(2)
             .fixedSize(horizontal: false, vertical: true)
 
@@ -269,7 +296,7 @@ struct TechniquePillCard: View {
         .frame(width: 110)
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(isSelected ? Color.white : Color.white.opacity(0.5))
+                .fill(isLocked ? Color.white.opacity(0.35) : (isSelected ? Color.white : Color.white.opacity(0.5)))
                 .shadow(
                     color: isSelected ? Color.zenPurple.opacity(0.14) : .clear,
                     radius: 8, x: 0, y: 3
@@ -278,8 +305,9 @@ struct TechniquePillCard: View {
         .overlay(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .stroke(
-                    isSelected ? Color.zenPurple.opacity(0.4) : Color.white.opacity(0.3),
-                    lineWidth: isSelected ? 1.5 : 1
+                    isLocked ? Color(red: 0.55, green: 0.40, blue: 0.75).opacity(0.35)
+                             : (isSelected ? Color.zenPurple.opacity(0.4) : Color.white.opacity(0.3)),
+                    lineWidth: isSelected || isLocked ? 1.5 : 1
                 )
         )
     }

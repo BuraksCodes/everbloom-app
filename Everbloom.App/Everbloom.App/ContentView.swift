@@ -29,8 +29,8 @@ struct ContentView: View {
                 BreathingView()
                     .tabVisible(selectedTab == .breathe)
 
-                SoundsView()
-                    .tabVisible(selectedTab == .sounds)
+                MeditationLibraryView()
+                    .tabVisible(selectedTab == .meditate)
 
                 JournalView()
                     .tabVisible(selectedTab == .journal)
@@ -88,13 +88,8 @@ struct ContentView: View {
                 }
             }
         }
-        // Animate tab change + stop ambient sounds when leaving Sounds tab
         .onChange(of: selectedTab) { old, new in
             previousTab = old
-            // Stop ambient sound when the user navigates away from Sounds
-            if old == .sounds && new != .sounds {
-                audioManager.stop()
-            }
         }
         // Deep-link: notification tap → open mood check-in sheet
         .onReceive(NotificationCenter.default.publisher(for: .everbloomOpenMoodCheckin)) { _ in

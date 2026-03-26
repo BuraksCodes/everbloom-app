@@ -97,6 +97,8 @@ struct BreathingTechnique: Identifiable {
     let phases: [BreathPhase]
     let totalRounds: Int
     let accentColor: Color
+    /// True → technique requires Everbloom Pro
+    var isPro: Bool = false
 
     struct BreathPhase: Identifiable {
         let id = UUID()
@@ -185,14 +187,86 @@ struct BreathingTechnique: Identifiable {
         accentColor: Color(red: 0.78, green: 0.85, blue: 0.95)
     )
 
-    static let all: [BreathingTechnique] = [.box, .breathing478, .diaphragmatic, .cyclicSighing, .coherent, .extendedExhale]
+    // ── Pro-only techniques (requires Everbloom Pro) ─────────────────────
+
+    /// Pursed Lip Breathing — NIH / CHEST Journal backed.
+    /// Slows respiration and reduces air trapping. Used in pulmonary rehab and CBT for panic.
+    static let pursedLip = BreathingTechnique(
+        name: "Pursed Lip",
+        subtitle: "2 · 4  — slow & controlled",
+        description: "Inhale through your nose for 2 counts, then exhale slowly through gently pursed lips for 4. Proven by NIH research to slow your breath, open airways, and calm the nervous system quickly.",
+        phases: [
+            BreathPhase(label: "Inhale",  duration: 2, scale: 1.25, instruction: "Breathe in through your nose for 2 counts"),
+            BreathPhase(label: "Exhale",  duration: 4, scale: 0.70, instruction: "Exhale through loosely pursed lips — like cooling soup"),
+        ],
+        totalRounds: 10,
+        accentColor: Color(red: 0.40, green: 0.78, blue: 0.85),
+        isPro: true
+    )
+
+    /// Alternate Nostril Breathing (Nadi Shodhana) — validated in Journal of Ayurveda & Integrative Medicine.
+    /// Balances the left and right hemispheres, lowers heart rate and anxiety.
+    static let alternateNostril = BreathingTechnique(
+        name: "Alternate Nostril",
+        subtitle: "4 · 4 · 4 — balance & calm",
+        description: "A yogic technique studied in the Journal of Ayurveda & Integrative Medicine. Alternating sides balances your nervous system and has been shown to significantly lower heart rate and anxiety within minutes.",
+        phases: [
+            BreathPhase(label: "Inhale",  duration: 4, scale: 1.30, instruction: "Block right nostril — inhale left"),
+            BreathPhase(label: "Hold",    duration: 4, scale: 1.30, instruction: "Block both nostrils — hold gently"),
+            BreathPhase(label: "Exhale",  duration: 4, scale: 0.70, instruction: "Block left nostril — exhale right"),
+        ],
+        totalRounds: 6,
+        accentColor: Color(red: 0.72, green: 0.52, blue: 0.88),
+        isPro: true
+    )
+
+    /// Triangle Breathing (4·4·8) — used in CBT and PTSD trauma therapy.
+    /// The extended 8-second exhale powerfully activates the parasympathetic system.
+    static let triangle = BreathingTechnique(
+        name: "Triangle Breathing",
+        subtitle: "4 · 4 · 8 — trauma release",
+        description: "Used in trauma-focused CBT and PTSD therapy. The 3-part triangle pattern — inhale, hold, long exhale — gives structure during overwhelming moments, and the 8-second exhale is one of the most powerful parasympathetic activators known.",
+        phases: [
+            BreathPhase(label: "Inhale",  duration: 4, scale: 1.30, instruction: "Breathe in slowly through your nose"),
+            BreathPhase(label: "Hold",    duration: 4, scale: 1.30, instruction: "Hold gently — let the breath settle"),
+            BreathPhase(label: "Exhale",  duration: 8, scale: 0.65, instruction: "Release fully and slowly through your mouth"),
+        ],
+        totalRounds: 5,
+        accentColor: Color(red: 0.88, green: 0.62, blue: 0.38),
+        isPro: true
+    )
+
+    /// Resonant Frequency Breathing (6·4·6) — targets baroreflex sensitivity and deep HRV.
+    /// Research: Lehrer et al., Applied Psychophysiology and Biofeedback.
+    static let resonant = BreathingTechnique(
+        name: "Resonant Frequency",
+        subtitle: "6 · 4 · 6 — deep HRV",
+        description: "Developed from Lehrer et al.'s baroreflex research, this rhythm synchronises your heartbeat and breath to maximise heart rate variability — the gold standard measure of nervous system resilience. Deeper and more structured than standard coherent breathing.",
+        phases: [
+            BreathPhase(label: "Inhale",  duration: 6, scale: 1.32, instruction: "Breathe in steadily through your nose"),
+            BreathPhase(label: "Hold",    duration: 4, scale: 1.32, instruction: "Hold still — feel your heartbeat"),
+            BreathPhase(label: "Exhale",  duration: 6, scale: 0.68, instruction: "Release evenly and completely"),
+        ],
+        totalRounds: 6,
+        accentColor: Color(red: 0.35, green: 0.60, blue: 0.82),
+        isPro: true
+    )
+
+    static let all: [BreathingTechnique] = [
+        // Free
+        .box, .breathing478, .diaphragmatic, .cyclicSighing, .coherent, .extendedExhale,
+        // Pro
+        .pursedLip, .alternateNostril, .triangle, .resonant
+    ]
 
     var recommendedTag: String? {
         switch name {
-        case "Cyclic Sighing":    return "★ Best for Panic"
-        case "Box Breathing":     return "★ Focus & Calm"
-        case "4-7-8 Breathing":   return "★ Sleep & Rest"
-        case "Coherent Breathing":return "★ Daily Practice"
+        case "Cyclic Sighing":       return "★ Best for Panic"
+        case "Box Breathing":        return "★ Focus & Calm"
+        case "4-7-8 Breathing":      return "★ Sleep & Rest"
+        case "Coherent Breathing":   return "★ Daily Practice"
+        case "Triangle Breathing":   return "★ Trauma Relief"
+        case "Resonant Frequency":   return "★ Deep Recovery"
         default: return nil
         }
     }
@@ -200,13 +274,17 @@ struct BreathingTechnique: Identifiable {
     /// SF Symbol name unique to each technique — used in library cards and detail view
     var sfSymbol: String {
         switch name {
-        case "Box Breathing":      return "square"
-        case "4-7-8 Breathing":    return "moon.fill"
-        case "Diaphragmatic":      return "circle.bottomhalf.filled"
-        case "Cyclic Sighing":     return "arrow.2.circlepath"
-        case "Coherent Breathing": return "waveform.path.ecg"
-        case "Extended Exhale":    return "arrow.down.to.line.compact"
-        default:                   return "wind"
+        case "Box Breathing":        return "square"
+        case "4-7-8 Breathing":      return "moon.fill"
+        case "Diaphragmatic":        return "circle.bottomhalf.filled"
+        case "Cyclic Sighing":       return "arrow.2.circlepath"
+        case "Coherent Breathing":   return "waveform.path.ecg"
+        case "Extended Exhale":      return "arrow.down.to.line.compact"
+        case "Pursed Lip":           return "mouth.fill"
+        case "Alternate Nostril":    return "arrow.left.arrow.right"
+        case "Triangle Breathing":   return "triangle"
+        case "Resonant Frequency":   return "waveform"
+        default:                     return "wind"
         }
     }
 

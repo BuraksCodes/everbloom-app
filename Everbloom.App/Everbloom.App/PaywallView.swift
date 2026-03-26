@@ -14,15 +14,13 @@ struct PaywallView: View {
         ("bubble.left.and.bubble.right.fill", Color(red: 0.55, green: 0.40, blue: 0.75),
          "Unlimited Bloom Chats",       "No daily message limits — always here for you"),
         ("waveform.path.ecg.rectangle",        Color(red: 0.40, green: 0.60, blue: 0.75),
-         "All Breathing Techniques",   "Every guided technique, from box to 4-7-8"),
+         "All 10 Breathing Techniques", "4 advanced techniques — Pursed Lip, Resonant, Triangle & more"),
         ("headphones",                          Color(red: 0.40, green: 0.60, blue: 0.48),
          "Full Sound Library",          "Rain, ocean, forest & more ambient sounds"),
         ("book.closed.fill",                    Color(red: 0.80, green: 0.55, blue: 0.30),
          "Unlimited Journal",           "Write as much as you need, always"),
         ("person.fill.checkmark",               Color(red: 0.65, green: 0.35, blue: 0.65),
-         "Therapist Finder",            "Search nearby therapists with ratings & reviews"),
-        ("speaker.wave.3.fill",                 Color(red: 0.35, green: 0.55, blue: 0.75),
-         "Voice Guidance in Crisis",    "Calming narrated steps during panic moments"),
+         "Therapist Finder",            "Search therapists worldwide with ratings & reviews"),
     ]
 
     var body: some View {

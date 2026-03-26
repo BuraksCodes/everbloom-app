@@ -119,21 +119,21 @@ extension View {
 // MARK: - Tab Item Labels
 
 enum AppTab: String, CaseIterable {
-    case home    = "Home"
-    case breathe = "Breathe"
-    case sounds  = "Sounds"
-    case journal = "Journal"
-    case chat    = "Bloom"
-    case profile = "Profile"
+    case home     = "Home"
+    case breathe  = "Breathe"
+    case meditate = "Meditate"
+    case journal  = "Journal"
+    case chat     = "Bloom"
+    case profile  = "Profile"
 
     var icon: String {
         switch self {
-        case .home:    return "heart.fill"
-        case .breathe: return "wind"
-        case .sounds:  return "music.note"
-        case .journal: return "book.closed.fill"
-        case .chat:    return "bubble.left.and.bubble.right.fill"
-        case .profile: return "person.fill"
+        case .home:     return "heart.fill"
+        case .breathe:  return "wind"
+        case .meditate: return "figure.mind.and.body"
+        case .journal:  return "book.closed.fill"
+        case .chat:     return "bubble.left.and.bubble.right.fill"
+        case .profile:  return "person.fill"
         }
     }
 }
