@@ -118,8 +118,9 @@ class AuthManager: ObservableObject {
     private var currentNonce: String?
     // Both must be retained until the auth sheet is dismissed —
     // releasing either one early causes silent failure (nothing happens on tap).
-    private var appleSignInCoordinator: AppleSignInCoordinator?
-    private var appleSignInController: ASAuthorizationController?
+    // Internal (not private) so AppleSignInCoordinator can nil them in its callbacks.
+    var appleSignInCoordinator: AppleSignInCoordinator?
+    var appleSignInController: ASAuthorizationController?
 
     /// Triggers Apple Sign In using ASAuthorizationController with an explicit
     /// window anchor — required for correct behaviour on iPad where SwiftUI's
@@ -254,9 +255,16 @@ final class AppleSignInCoordinator: NSObject,
         let scenes = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
         let active = scenes.first(where: { $0.activationState == .foregroundActive }) ?? scenes.first
-        return active?.windows.first(where: { $0.isKeyWindow })
-            ?? active?.windows.first
-            ?? UIWindow()
+        // Return existing key window if available
+        if let window = active?.windows.first(where: { $0.isKeyWindow }) ?? active?.windows.first {
+            return window
+        }
+        // Last resort: create a new window attached to the active scene.
+        // UIWindow(windowScene:) avoids the iOS 26 deprecation of bare UIWindow().
+        if let scene = active {
+            return UIWindow(windowScene: scene)
+        }
+        return UIWindow() // absolute fallback — should never reach here
     }
 
     // ── Success ───────────────────────────────────────────────────────────────
