@@ -49,8 +49,18 @@ class SubscriptionManager: ObservableObject {
         #if DEBUG
         return true
         #else
-        // TestFlight receipts are named "sandboxReceipt"; App Store receipts are named "receipt"
-        return Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+        // Method 1: TestFlight/Ad-hoc builds contain an embedded provisioning profile.
+        // Apple strips this file entirely when processing an App Store submission.
+        let provisionPath = Bundle.main.bundlePath.appending("/embedded.mobileprovision")
+        if FileManager.default.fileExists(atPath: provisionPath) {
+            return true
+        }
+        // Method 2: TestFlight receipt URL path contains "sandboxReceipt";
+        // App Store receipt URL path contains "receipt".
+        if Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt" {
+            return true
+        }
+        return false
         #endif
     }
 
