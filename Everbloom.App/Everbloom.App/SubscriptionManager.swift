@@ -43,6 +43,17 @@ class SubscriptionManager: ObservableObject {
         didSet { if testerPremiumOverride { isPremium = true } else { Task { await refreshPremiumStatus() } } }
     }
 
+    /// True in Xcode/Simulator (DEBUG) and in TestFlight distribution.
+    /// Always false for App Store production builds — Tester Mode is hidden there.
+    var isInternalBuild: Bool {
+        #if DEBUG
+        return true
+        #else
+        // TestFlight receipts are named "sandboxReceipt"; App Store receipts are named "receipt"
+        return Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+        #endif
+    }
+
     // ── Free-tier limits ──
     static let freeDailyBloomMessages = 10
     static let freeJournalEntryLimit  = 20

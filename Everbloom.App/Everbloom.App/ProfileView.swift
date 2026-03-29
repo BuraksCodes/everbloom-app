@@ -613,38 +613,38 @@ struct ProfileView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 14)
 
-                #if DEBUG
-                Divider().padding(.leading, 52).opacity(0.4)
+                // Tester Mode — visible in Xcode/Simulator and TestFlight, hidden in App Store
+                if subscriptionManager.isInternalBuild {
+                    Divider().padding(.leading, 52).opacity(0.4)
 
-                // Tester premium override — DEBUG builds only, never shown in App Store
-                HStack(spacing: 14) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.orange.opacity(0.15))
-                            .frame(width: 36, height: 36)
-                        Image(systemName: "hammer.fill")
-                            .font(.system(size: 14))
-                            .foregroundColor(.orange)
+                    HStack(spacing: 14) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(Color.orange.opacity(0.15))
+                                .frame(width: 36, height: 36)
+                            Image(systemName: "hammer.fill")
+                                .font(.system(size: 14))
+                                .foregroundColor(.orange)
+                        }
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Tester Mode")
+                                .font(ZenFont.heading(15))
+                                .foregroundColor(.zenText)
+                            Text("Unlock all premium features for testing")
+                                .font(ZenFont.caption(12))
+                                .foregroundColor(.zenSubtext)
+                        }
+                        Spacer()
+                        Toggle("", isOn: Binding(
+                            get: { subscriptionManager.testerPremiumOverride },
+                            set: { subscriptionManager.testerPremiumOverride = $0 }
+                        ))
+                        .labelsHidden()
+                        .tint(.orange)
                     }
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Tester Mode")
-                            .font(ZenFont.heading(15))
-                            .foregroundColor(.zenText)
-                        Text("Unlock all premium features for testing")
-                            .font(ZenFont.caption(12))
-                            .foregroundColor(.zenSubtext)
-                    }
-                    Spacer()
-                    Toggle("", isOn: Binding(
-                        get: { subscriptionManager.testerPremiumOverride },
-                        set: { subscriptionManager.testerPremiumOverride = $0 }
-                    ))
-                    .labelsHidden()
-                    .tint(.orange)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 14)
-                #endif
             }
             .zenCard()
         }
