@@ -116,8 +116,10 @@ class AuthManager: ObservableObject {
 
     // Holds the current nonce for Apple sign-in (must persist across async call)
     private var currentNonce: String?
-    // Retained for the lifetime of the auth request
+    // Both must be retained until the auth sheet is dismissed —
+    // releasing either one early causes silent failure (nothing happens on tap).
     private var appleSignInCoordinator: AppleSignInCoordinator?
+    private var appleSignInController: ASAuthorizationController?
 
     /// Triggers Apple Sign In using ASAuthorizationController with an explicit
     /// window anchor — required for correct behaviour on iPad where SwiftUI's
@@ -137,6 +139,7 @@ class AuthManager: ObservableObject {
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.delegate = coordinator
         controller.presentationContextProvider = coordinator
+        appleSignInController = controller   // retain — local var would be released before callback
         controller.performRequests()
     }
 
@@ -261,15 +264,21 @@ final class AppleSignInCoordinator: NSObject,
                                  didCompleteWithAuthorization authorization: ASAuthorization) {
         Task { @MainActor in
             await authManager?.handleAppleSignIn(authorization)
+            // Release retained references now that auth is complete
+            authManager?.appleSignInController  = nil
+            authManager?.appleSignInCoordinator = nil
         }
     }
 
     // ── Failure ───────────────────────────────────────────────────────────────
     func authorizationController(controller: ASAuthorizationController,
                                  didCompleteWithError error: Error) {
-        // Ignore user-cancelled — only surface real errors
-        guard (error as NSError).code != ASAuthorizationError.canceled.rawValue else { return }
         Task { @MainActor in
+            // Release retained references regardless of outcome
+            authManager?.appleSignInController  = nil
+            authManager?.appleSignInCoordinator = nil
+            // Ignore user-cancelled — only surface real errors
+            guard (error as NSError).code != ASAuthorizationError.canceled.rawValue else { return }
             authManager?.errorMessage = "Apple Sign In failed — please try again."
         }
     }
