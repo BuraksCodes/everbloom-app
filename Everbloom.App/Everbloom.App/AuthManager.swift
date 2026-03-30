@@ -250,25 +250,32 @@ final class AppleSignInCoordinator: NSObject,
 
     // ── Presentation context ──────────────────────────────────────────────────
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        // Resolve the foreground-active UIWindowScene first, then any scene.
-        // UIWindowScene.windows + isKeyWindow were deprecated in iOS 16 and can
-        // return empty arrays on iOS 26 — UIWindowScene.keyWindow (iOS 15+) is
-        // the correct replacement.
-        let allScenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
-        let active = allScenes.first(where: { $0.activationState == .foregroundActive })
-                  ?? allScenes.first
+        // On iOS 15+ use UIWindowScene.keyWindow — the most reliable API.
+        // Walk every connected scene and prefer the foreground-active one.
+        let scenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+        let activeScene = scenes.first(where: { $0.activationState == .foregroundActive })
+                       ?? scenes.first
 
-        // 1. UIWindowScene.keyWindow  — correct API, iOS 15+
-        if let window = active?.keyWindow { return window }
+        // 1. Preferred: key window of the active scene (iOS 15+)
+        if let window = activeScene?.keyWindow { return window }
 
-        // 2. Legacy fallback (.windows is deprecated but harmless as a fallback)
-        if let window = active?.windows.first(where: { $0.isKeyWindow })
-                     ?? active?.windows.first { return window }
+        // 2. Search all scenes for any key window
+        for scene in scenes {
+            for window in scene.windows where window.isKeyWindow { return window }
+        }
 
-        // 3. Create a window attached to the scene so it has a valid hierarchy
-        if let scene = active { return UIWindow(windowScene: scene) }
+        // 3. First available window across all scenes
+        if let window = scenes.flatMap(\.windows).first { return window }
 
-        // 4. Absolute last resort — should never reach here on any shipping device
+        // 4. Create a window attached to the active scene
+        if let scene = activeScene {
+            let window = UIWindow(windowScene: scene)
+            window.makeKeyAndVisible()
+            return window
+        }
+
+        // 5. Absolute last resort — should never reach here on any shipping device
         return UIWindow()
     }
 
