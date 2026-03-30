@@ -118,10 +118,14 @@ class SubscriptionManager: ObservableObject {
 
         do {
             let offerings = try await Purchases.shared.offerings()
-            guard let package = offerings.current?.availablePackages.first(where: {
+            // Search current offering first, then ALL packages across all offerings
+            let package = offerings.current?.availablePackages.first(where: {
                 $0.storeProduct.productIdentifier == productID
-            }) else {
-                errorMessage = "Product not available — please try again shortly."
+            }) ?? offerings.all.values.flatMap { $0.availablePackages }.first(where: {
+                $0.storeProduct.productIdentifier == productID
+            })
+            guard let package else {
+                errorMessage = "Subscription not available right now. Please ensure you have an active internet connection and try again."
                 isPurchasing = false
                 return
             }

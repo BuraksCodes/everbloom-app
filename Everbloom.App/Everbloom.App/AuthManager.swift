@@ -250,21 +250,26 @@ final class AppleSignInCoordinator: NSObject,
 
     // ── Presentation context ──────────────────────────────────────────────────
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        // Find the foreground active window scene and return its key window.
-        // Falls back to any available window so the sheet always has an anchor.
-        let scenes = UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-        let active = scenes.first(where: { $0.activationState == .foregroundActive }) ?? scenes.first
-        // Return existing key window if available
-        if let window = active?.windows.first(where: { $0.isKeyWindow }) ?? active?.windows.first {
-            return window
-        }
-        // Last resort: create a new window attached to the active scene.
-        // UIWindow(windowScene:) avoids the iOS 26 deprecation of bare UIWindow().
-        if let scene = active {
-            return UIWindow(windowScene: scene)
-        }
-        return UIWindow() // absolute fallback — should never reach here
+        // Resolve the foreground-active UIWindowScene first, then any scene.
+        // UIWindowScene.windows + isKeyWindow were deprecated in iOS 16 and can
+        // return empty arrays on iOS 26 — UIWindowScene.keyWindow (iOS 15+) is
+        // the correct replacement.
+        let allScenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+        let active = allScenes.first(where: { $0.activationState == .foregroundActive })
+                  ?? allScenes.first
+
+        // 1. UIWindowScene.keyWindow  — correct API, iOS 15+
+        if let window = active?.keyWindow { return window }
+
+        // 2. Legacy fallback (.windows is deprecated but harmless as a fallback)
+        if let window = active?.windows.first(where: { $0.isKeyWindow })
+                     ?? active?.windows.first { return window }
+
+        // 3. Create a window attached to the scene so it has a valid hierarchy
+        if let scene = active { return UIWindow(windowScene: scene) }
+
+        // 4. Absolute last resort — should never reach here on any shipping device
+        return UIWindow()
     }
 
     // ── Success ───────────────────────────────────────────────────────────────

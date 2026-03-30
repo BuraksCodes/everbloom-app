@@ -195,6 +195,16 @@ struct PaywallView: View {
 
     private var ctaSection: some View {
         VStack(spacing: 12) {
+            // ── Error / status message ──
+            if let error = subscriptionManager.errorMessage {
+                Text(error)
+                    .font(ZenFont.caption(13))
+                    .foregroundColor(Color(red: 1.0, green: 0.65, blue: 0.55))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+
             Button {
                 Task { await subscriptionManager.purchase(selectedProduct) }
             } label: {
@@ -230,6 +240,7 @@ struct PaywallView: View {
                 .font(ZenFont.caption(12))
                 .foregroundColor(.white.opacity(0.45))
         }
+        .animation(.easeInOut(duration: 0.3), value: subscriptionManager.errorMessage)
     }
 
     private var ctaTitle: String {
