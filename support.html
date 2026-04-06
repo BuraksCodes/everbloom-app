@@ -3,302 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everbloom — Support</title>
+    <title>Support — Everbloom</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: #0c0b14;
-            color: #e0d8f0;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ── Animated background ── */
-        .bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.18;
-            animation: float 12s ease-in-out infinite;
-        }
-        .blob1 { width: 500px; height: 500px; background: #9b7fe0; top: -120px; left: -100px; animation-delay: 0s; }
-        .blob2 { width: 400px; height: 400px; background: #7eb8d4; top: 40%; right: -80px; animation-delay: 4s; }
-        .blob3 { width: 350px; height: 350px; background: #a0c8a0; bottom: -80px; left: 30%; animation-delay: 8s; }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(20px, -30px) scale(1.05); }
-        }
-
-        /* ── Layout ── */
-        .content { position: relative; z-index: 1; }
-
-        /* ── Hero ── */
-        .hero {
-            text-align: center;
-            padding: 72px 24px 56px;
-        }
-        .logo-wrap {
-            display: inline-block;
-            margin-bottom: 28px;
-        }
-        .logo-wrap img {
-            width: 100px;
-            height: 100px;
-            border-radius: 26px;
-            box-shadow: 0 20px 60px rgba(155, 127, 224, 0.35);
-        }
-        .hero h1 {
-            font-size: 38px;
-            font-weight: 600;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #d4c8f4 0%, #a8c8e8 50%, #b8d8b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 12px;
-        }
-        .hero p {
-            font-size: 17px;
-            color: #9080b8;
-            font-weight: 300;
-            letter-spacing: 0.3px;
-        }
-        .hero .tagline {
-            font-size: 15px;
-            color: #6860a0;
-            margin-top: 8px;
-            font-style: italic;
-        }
-
-        /* ── Container ── */
-        .container {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 0 24px 80px;
-        }
-
-        /* ── Divider ── */
-        .divider {
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, #9b7fe0, #7eb8d4);
-            border-radius: 2px;
-            margin: 0 auto 40px;
-            opacity: 0.4;
-        }
-
-        /* ── Cards ── */
-        .card {
-            background: rgba(255,255,255,0.035);
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 20px;
-            padding: 32px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .card h2 {
-            font-size: 17px;
-            font-weight: 600;
-            color: #c4b4e4;
-            margin-bottom: 20px;
-            letter-spacing: 0.2px;
-        }
-
-        .card p, .card li {
-            color: #9080b0;
-            line-height: 1.75;
-            font-size: 15px;
-            font-weight: 300;
-        }
-
-        .card ul { padding-left: 18px; }
-        .card li { margin-bottom: 10px; }
-
-        /* ── Contact card ── */
-        .contact-card {
-            background: linear-gradient(135deg, rgba(155,127,224,0.12) 0%, rgba(126,184,212,0.10) 100%);
-            border: 1px solid rgba(155,127,224,0.22);
-            border-radius: 20px;
-            padding: 40px 32px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .contact-card h2 {
-            font-size: 22px;
-            font-weight: 600;
-            color: #e0d8f4;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
-        }
-        .contact-card .sub {
-            color: #8070b0;
-            font-size: 15px;
-            font-weight: 300;
-            margin-bottom: 28px;
-            line-height: 1.6;
-        }
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #8b6bc8, #6898c8);
-            color: #fff;
-            text-decoration: none;
-            padding: 14px 36px;
-            border-radius: 50px;
-            font-size: 15px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            box-shadow: 0 8px 30px rgba(139, 107, 200, 0.35);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(139, 107, 200, 0.5);
-        }
-
-        /* ── Crisis card ── */
-        .crisis-card {
-            background: rgba(200, 80, 80, 0.07);
-            border: 1px solid rgba(200, 80, 80, 0.18);
-            border-radius: 20px;
-            padding: 28px 32px;
-            margin-bottom: 20px;
-        }
-        .crisis-card h2 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #e09090;
-            margin-bottom: 12px;
-        }
-        .crisis-card p {
-            color: #a07878;
-            font-size: 15px;
-            line-height: 1.75;
-            font-weight: 300;
-        }
-        .crisis-card a { color: #d08080; text-decoration: none; border-bottom: 1px solid rgba(208,128,128,0.3); }
-
-        /* ── FAQ ── */
-        .faq-item { margin-bottom: 28px; }
-        .faq-item:last-child { margin-bottom: 0; }
-        .faq-item h3 {
-            font-size: 15px;
-            font-weight: 500;
-            color: #d0c4ec;
-            margin-bottom: 8px;
-        }
-        .faq-item p {
-            color: #8070a8;
-            font-size: 14px;
-            line-height: 1.75;
-            font-weight: 300;
-        }
-
-        /* ── Footer ── */
-        footer {
-            text-align: center;
-            padding: 32px 24px;
-            color: #3e3460;
-            font-size: 13px;
-            font-weight: 300;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            position: relative;
-            z-index: 1;
-        }
-        footer a { color: #6050a0; text-decoration: none; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f9f6ff; color: #2d2d3a; line-height: 1.7; padding: 40px 20px; }
+        .container { max-width: 720px; margin: 0 auto; }
+        h1 { font-size: 2rem; font-weight: 700; color: #6b4fa0; margin-bottom: 8px; }
+        .subtitle { color: #888; font-size: 0.9rem; margin-bottom: 40px; }
+        h2 { font-size: 1.1rem; font-weight: 600; color: #6b4fa0; margin: 32px 0 10px; }
+        p { margin-bottom: 12px; color: #444; }
+        a { color: #6b4fa0; }
+        .card { background: white; border-radius: 16px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(107,79,160,0.08); }
+        .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; color: #2d2d3a; }
+        .card p { margin: 0; font-size: 0.95rem; }
+        hr { border: none; border-top: 1px solid #e8e0f5; margin: 40px 0; }
+        .footer { font-size: 0.85rem; color: #aaa; text-align: center; margin-top: 60px; }
+        .email-btn { display: inline-block; background: #6b4fa0; color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; margin-top: 8px; }
     </style>
 </head>
 <body>
-
-<div class="bg">
-    <div class="blob blob1"></div>
-    <div class="blob blob2"></div>
-    <div class="blob blob3"></div>
+<div class="container">
+    <h1>Everbloom Support</h1>
+    <p class="subtitle">We're here to help. Get answers to common questions or reach out directly.</p>
+    <h2>Frequently Asked Questions</h2>
+    <div class="card"><h3>How do I cancel my subscription?</h3><p>Open the Settings app on your iPhone or iPad → tap your Apple ID → Subscriptions → Everbloom → Cancel Subscription. You can also manage subscriptions at <a href="https://apps.apple.com/account/subscriptions">apps.apple.com/account/subscriptions</a>.</p></div>
+    <div class="card"><h3>How do I restore my purchases?</h3><p>Open Everbloom → Profile tab → tap "Upgrade to Premium" → on the paywall, tap "Restore Purchases" at the bottom.</p></div>
+    <div class="card"><h3>My data isn't syncing across devices</h3><p>Make sure you are signed in with the same account on both devices. Try signing out and back in if sync issues persist.</p></div>
+    <div class="card"><h3>How do I delete my account and data?</h3><p>Go to Profile → scroll to the bottom → tap "Delete Account & Data." This permanently removes your account, journal entries, mood history, and all personal data. This cannot be undone.</p></div>
+    <div class="card"><h3>Is Bloom a real therapist?</h3><p>No. Bloom is an AI companion providing emotional support and evidence-based wellness techniques. Bloom is not a licensed mental health professional and does not provide medical advice or diagnosis. If you are in crisis, please call 988 (Suicide and Crisis Lifeline).</p></div>
+    <div class="card"><h3>The app is crashing or not working correctly</h3><p>Try force-closing and reopening the app. If the issue persists, delete and reinstall — your data will sync back after signing in. Contact us below if issues continue.</p></div>
+    <hr>
+    <h2>Contact Us</h2>
+    <p>Can't find what you're looking for? We typically respond within 1-2 business days.</p>
+    <a href="mailto:burakcak2000@gmail.com" class="email-btn">Email Support</a>
+    <hr>
+    <div class="footer">&copy; 2026 Burak Cakmakoglu · Everbloom<br><a href="https://burakscodes.github.io/everbloom-app/privacy-policy.html">Privacy Policy</a> · <a href="https://burakscodes.github.io/everbloom-app/terms.html">Terms of Use</a></div>
 </div>
-
-<div class="content">
-    <div class="hero">
-        <div class="logo-wrap">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HSuDAABDA0lEQVR4nO3dzbPtV1kn8HUu53IhihEMoIhU2Q1WhOquVqtIwYSJRbXijB7puHtmdbVD/4Ae2l3lrMeNM2egXZQTJ1KhCqt5NaKIJqAtBkkIRDBwTw/Czt333L3P2S/r7VnP5zNR48056+6XX/b3u5712xcFEvh/f/O9q9FrAABgbj/9b95wMXoN0JIXOKH9w1f+RbAHAKCrn/m3b5SjCMkLl+kJ+QAARKEcYGZenExD0AcAYFWKAWbgRcgQwj4AANkpBejNC44uBH4AALiZQoDWvMBoQuAHAIDzKASozQuKKgR+AABoSyHAubyAOJnQDwAAYygDOIUXDUcR+gEAYC7KAA7lhcKthH4AAIhBGcBNvDjYSegHAIDYlAFc5wXBa4R+AABYkzKAUhQA6Qn9AACQizIgL098UoI/AADkpgjIxxOeiNAPAADsogzIwZOcgOAPAAAcQhGwNk/uwgR/AADgFIqANXlSFyP0AwAANSkD1uGJXITgDwAAtKQIiM8TGJzgDwAA9KQIiMsTF5TgDwAAjKQIiMcTFozgDwAAzEQREIcnKgjBHwAAmJkiYH53Ri+A2wn/AADA7OSW+WloJuYNBAAARGQaYE6elAkJ/gAAwAoUAXPxZExE8AcAAFakCJiDewBMQvgHAABWJe/MQQszmDcCAACQiWmAcTzwgwj+AABAZoqA/hwBGED4BwAAspOL+tO4dOQFDgAA8CjTAH2YAOhE+AcAANhNXupDy9KYFzIAAMDhTAO0YwKgIeEfAADgOHJUO5qVBrxgAQAAzmcaoC4TAJUJ/wAAAHXIV3UpACry4gQAAKhLzqrHOEUFXpAAAADtORJwHhMAZxL+AQAA+pC/zqMAOIMXHwAAQF9y2OmMT5zACw4AAGA8RwKOYwLgSMI/AADAHOSz4ygAjuDFBQAAMBc57XDGJQ7gBQUAADA/RwJuZgLgFsI/AABADPLbzRQAN/DiAQAAiEWO208BsIcXDQAAQEzy3G4KgB28WAAAAGKT6x6lALjGiwQAAGAN8t3DFABbvDgAAADWIuc94CsSihcEAABABtm/JjD9BIDwDwAAkEP2/Je6AMj+5AMAAGSTOQemLQAyP+kAAACZZc2DKQuArE82AAAAr8qYC9MVABmfZAAAAB6VLR+mKgCyPbkAAADcLFNOTFMAZHpSAQAAOFyWvJiiAMjyZAIAAHCaDLnxYvQCWvuHv17/SQQAAKCOn3n3G5fNyUtPAAj/AAAAHGPlHLlsAbDykwYAAEA7q+bJJQuAVZ8sAAAA+lgxVy5XAKz4JAEAANDfavlyuQIAAAAAeNRSBcBq7QwAAABjrZQzlykAVnpSAAAAmMcqeXOJAmCVJwMAAIA5rZA7wxcAKzwJAAAAzC96/gxdAER/8AEAAIglcg4NWwBEftABAACIK2oeDVkARH2wAQAAWEPEXHo5egGnCPcoAwAAwGDhJgD+PmDLAgAAwHqi5dNQBUC0BxcAAIC1RcqpYQqASA8qAAAAeUTJq2EKAAAAAOB0IQqAKG0KAAAAOUXIrdMXABEeRAAAAJg9v05dAMz+4AEAAMC2mXPs1AUAAAAAUMe0BcDMrQkAAADsM2uenbIAmPXBAgAAgEPMmGunKwBmfJAAAADgWLPl2+kKAAAAAKC+qQqA2doRAAAAOMdMOXeaAmCmBwUAAABqmSXvTlMAAAAAAO1MUQDM0oYAAABACzPk3uEFwAwPAgAAALQ2Ov8OLwAAAACA9oYWAKPbDwAAAOhpZA4eVgAI/wAAAGQ0Kg87AgAAAAAJDCkA7P4DAACQ2YhcbAIAAAAAEuheANj9BwAAgP75uGsBIPwDAADAAz1zsiMAAAAAkEC3AsDuPwAAADyqV142AQAAAAAJXPT4JX//1y/b/QcAAIAbvOPdjzXN6CYAAAAAIIHmBYDdfwAAALhd6/zctAAQ/gEAAOBwLXO0IwAAAACQQLMCwO4/AAAAHK9VnjYBAAAAAAk0KQDs/gMAAMDpWuRqEwAAAACQQPUCwO4/AAAAnK92vjYBAAAAAAlULQDs/gMAAEA9NXO2CQAAAABIoFoBYPcfAAAA6quVt00AAAAAQAIKAAAAAEigSgFg/B8AAADaqZG7TQAAAABAAhfn/oC//yu7/wAAANDDO97z2Mk53gQAAAAAJHBWAWD3HwAAAPo5J4ebAAAAAIAEFAAAAACQwMkFgPF/AAAA6O/UPG4CAAAAABI4qQCw+w8AAADjnJLLTQAAAABAAgoAAAAASODoAsD4PwAAAIx3bD43AQAAAAAJKAAAAAAggaMKAOP/AAAAMI9jcroJAAAAAEhAAQAAAAAJHFwAGP8HAACA+Rya100AAAAAQAIKAAAAAEjgoALA+D8AAADM65DcbgIAAAAAElAAAAAAQAK3FgDG/wEAAGB+t+V3EwAAAACQgAIAAAAAErixADD+DwAAAHHclOMvb/oXpX8AAABYgyMAAAAAkIACAAAAABLYWwB83fl/AAAACGdfnjcBAAAAAAkoAAAAACABBQAAAAAksLMAcP4fAAAA4tqV600AAAAAQAIKAAAAAEhAAQAAAAAJPFIAOP8PAAAA8V3P9yYAAAAAIAEFAAAAACSgAAAAAIAEFAAAAACQwEMFgBsAAgAAwDq2c74JAAAAAEhAAQAAAAAJKAAAAAAgAQUAAAAAJKAAAAAAgAReKwB8AwAAAACsZ5P3TQAAAABAAgoAAAAASEABAAAAAAkoAAAAACABBQAAAAAkoAAAAACABC5K8RWAAAAAsDoTAAAAAJCAAgAAAAASUAAAAABAAgoAAAAASOCylFKKWwACAADA0kwAAAAAQAIKAAAAAEhAAQAAAAAJKAAAAAAggTtf//LLbgEIAAAAizMBAAAAAAkoAAAAACABBQAAAAAkoAAAAACABBQAAAAAkIACAAAAABJQAAAAAEACCgAAAABIQAEAAAAACSgAAAAAIAEFAAAAACSgAAAAAIAEFAAAAACQgAIAAAAAElAAAAAAQAIKAAAAAEhAAQAAAAAJKAAAAAAggctSrkavAQAAAGjMBAAAAAAkoAAAAACABBQAAAAAkIACAAAAABJQAAAAAEACCgAAAABIQAEAAAAACSgAAAAAIAEFAAAAACSgAAAAAIAEFAAAAACQwOXoBQAA53nrs1/s9rv+6V3v6/a7AIC6Lr7+5e9ejV4EALBbz3Bfi5IAAOakAACAwSKG/FMpBwBgnIuvKQAAoJu3JQr7h/qGUgAAulAAAEBDAv/xFAIA0IYCAAAqEvjrUwgAQB0KAAA4g8Dfn0IAAE6jAACAIwn981AGAMDhFAAAcAuBPw6FAADspwAAgB2E/viUAQDwMAUAAGwR/NejCACAVykAAEhP6M9DGQBAZgoAANIS/PNSBACQkQIAgFSEfq5TBgCQhQIAgBQEf26jCABgdQoAAJYm+HMsRQAAq1IAALAcoZ9alAEArEQBAMAyBH9aUQQAsAIFAADhCf70oggAIDIFAABhCf6MoggAIKI7oxcAAKcQ/hnJ6w+AiEwAABCK4MVsTAMAEIUCAIAQBH9mpwgAYHYKAACmJvgTjSIAgFldfO0vFQAAzOltzwn/xPSNn1MCADAfBQAA0xH8WYUiAICZKAAAmIbgz6oUAQDMwNcAAjAF4Z+VeX0DMAMTAAAMJRiRjWkAAEYxAQDAMMI/GXndAzCKCQAAuhOA4FWmAQDoyQQAAF0J//CA9wMAPSkAAOhG2IFHeV8A0IsjAAA0J+DAYRwJAKAlEwAANCX8w+G8XwBoSQEAQDPCDBzP+waAVhwBAKA6AQbqcCQAgJpMAABQlfAP9Xg/AVCTAgCAaoQVqM/7CoBaFAAAVCGkQDveXwDU4B4AAJxFMIG+3BcAgFOZAADgZMI/9Od9B8CpFAAAnEQIgXG8/wA4hQIAgKMJHzCe9yEAx1IAAHAUoQPm4f0IwDEUAAAcTNiA+XhfAnAoBQAABxEyYF7enwAcQgEAwK2EC5if9ykAt1EAAHAjoQLi8H4F4CYKAAD2EiYgHu9bAPZRAACwkxABcXn/ArCLAgCARwgPEJ/3MQDXKQAAeIjQAOvwfgZgmwIAgNcIC7Ae72sANhQAAJRShARYmfc3AKUoAAAowgFk4H0OgAIAIDmhAPLwfgfITQEAkJgwAPl43wPkpQAASEoIgLy8/wFyUgAAJOTDP+A6AJCPAgAgGR/6gQ3XA4BcFAAAAACQgAIAIBG7fcB1rgsAeSgAAJLwIR/Yx/UBIAcFAEACPtwDt3GdAFifAgBgcT7UA4dyvQBYmwIAAAAAElAAACzMbh5wLNcNgHUpAAAW5UM8cCrXD4A1KQAAFuTDO3Au1xGA9SgAAAAAIAEFAMBi7NoBtbieAKxFAQCwEB/WgdpcVwDWoQAAWIQP6UArri8Aa1AAAAAAQAIKAIAF2J0DWnOdAYjv4rm//O7V6EUAcLq3+1AOdPSPP/e+0UsA4EQmAAAAACABBQBAYHb/gd5cdwDiUgAABOVDODCK6w9ATAoAAAAASEABABCQ3TdgNNchgHgUAAAAAJCAAgAgGLtuwCxcjwBiUQAABOLDNjAb1yWAOC7L1eglAAAQms+TACGYAAAI4u1fs8sGzMn1CSCGy9ELAKCfP33727v9rg/94z92+12woq/d+fFuv+ud97/T7XcBMM7Fc89819AWwOQO2V3rGe5rURKQVc9wX8shJcE/vvN9HVYCwKlMAAAEEjHk3+Smv49ygOgihvyb3PT3MUEAEIMJAIBJfaG8+oH68pXvDV7JPJQCzGq1sH+OH9y9V0op5Y1v/enBKwHguovnnvmOAgBgApvAv+3yle8PWEkcCgFGEfhvtikBtr3xrWtNMAFEpAAAGGRX4L9OAXAchQCtCPzH2VUAXKcQAOhPAQDQySGBf5vwfz6FAKcS+M93SAmwTSEA0J4CAKChY0P/NgVAXcoAbiP013VsAbBNGQDQhgIAoKJzAv824b89hQACf3vnlADbFAIAdSgAAM5UK/RvUwD0pQzIQ+jvq1YBsE0ZAHA6BQDAiVoE/1KE/5EUAesS/MdpUQKUoggAOIUCAOAIrUL/NgXAHJQB8Qn9c2hVAGxTBgAcRgEAcIAewX9DATAXRUA8gv9cehQAG4oAgJspAAD26Bn6N4T/uSkD5iX0z61nCbChDAB4lAIA4JoRwX9DARCDImAegn8MIwqADUUAwAMKAIAfGRn8SxH+I1IEjCP4xzOyBChFEQBQigIASG506N+mAIhNGdCe0B/b6AJgmzIAyEoBAKQ0U/AvRfhfiSKgPsF/HTOVAKUoAoB8FABAKrMF/w0FwHoUAecT/NczWwGwoQgAslAAACnMGvw3FADrUgQcT/Bf16wFwIYiAFjdndELAGhN+GekP327QHEM4X9ts1/v/uWfFHbA2kwAAMuaPfhvzP6BmHpMA+wn+Ocx+xTAhmkAYEUKAGA5UYJ/KcJ/VoqABwT/nKKUAKUoAoC1KACAZUQK/hsKgNwyFwGCf26RCoANRQCwAvcAAJYQMfxD1vsDCP9E5P4AwApMAAChRQ7+dv/ZlmEaQPBnW8QpgA3TAEBUCgAgpMjBf0MBwC4rFgGCP7tELgA2FAFANI4AAOEI/6xstWMBwj/7rHAddCwAiMYEABDGCsF/Y4UPvrQXeRpA8OcQK0wBbJgGACIwAQCEsFL4h0NFnQYQ/snINAAQgQkAYGorBn+7/5wiwjSA4M8pVpoC2DANAMzKBAAwrRXDP5xq9mkA4R8eMA0AzEoBAExJ+IdHzVoCCP/wKCUAMCNHAICpZAj+jgBQwwxHAgR/aljxCMB1jgQAszABAExD+IfDjZ4GEP6pJcN10TQAMAsFADCFDOEfahtVAgj/cDwlADADRwCAobIF/ww7XYzR40iA4E8rGY4BbHMkABjFBAAwjPAP9bSeBhD+aSnb9dE0ADCKAgAYIlv4hx5alQDCP9SnBABGUAAA3Qn/0E7tEkD4h3aUAEBv7gEAdJM9+GcbcWW8c+4LIPjTW7b7AFznvgBADyYAgC6Ef+Gf/k6dBhD+GSH7ddI0ANCDAgBoLnv4h5GOLQGEfxhHCQC0pgAAmhL+YbxDSwDhH8ZTAgAtKQCAZoR/mMdtJYDwD/NQAgCtKACAJoT/B7Kfa2Ue+0oA4Z9ZuF4+oAQAWlAAANUJ/zCv6yWA8A/zUgIAtSkAgKqEf5jfpgQQ/mF+SgCgJgUAUI3wD3H8ydt/ZvQSgAMpAYBaFABAFcL/bs6zMqNXfvSf/2fe+qbBK4FHuW7upgQAalAAAGcT/iGOV679p18JAHEoAYBzKQCAswj/EMf18L+hBIA4lADAORQAwMmEf4hjX/jfUAJAHEoA4FQKAOAkwj/EcVv431ACQBxKAOAUCgDgaML/YdzIihkcGv43lADMwPXzMEoA4FgKAOAowj/EcWz431ACQBxKAOAYCgDgYMI/xHFq+N9QAkAcSgDgUAoA4CDCP8RxbvjfUAJAHEoA4BAXz/3Fd65GLwKY2xcuhP9TOMPKCLXC/7Yn/+ml6j8TbvODu/dGLyGkNz7x9tFLACZmAgC4kfAPcbQI/6WYBIBI/uV5kwDAfgoAYC/hH+JoFf43lAAQhxIA2EcBANCA8X+A87iOAtR38ax7AAA72P0/z10fXOmo9e7/NvcDoCf3ATjPG9wPALjGBADwCOEf4ugZ/ktxFAAi+Z6jAMA1CgDgIcI/xNE7/G8oASAOJQCwTQEAvEb4hzhGhf8NJQDEoQQANhQAAAAAkIACACil2P2HSEbv/m+YAoA4TAEApSgAgCL8QySzhP8NJQDEoQQA5voUAXQn/EMcs4X/DSUAxKEEgNzm/CQBENjdV74/egkAS7h0PQWoSgEAidn9hzhm3f3fMAUAcZgCgLzm/jQBNCP8Qxyzh/8NJQDEoQSAnGJ8ogCqEv4hjijhf0MJAHEoASCfWJ8qAAAAgJMoACAZu/8QR7Td/w1TABCHKQDIJeYnC+Akwj/EETX8bygBIA4lAOQR+9MFAAAAcBAFACRh9x/iiL77v2EKAOIwBQA5rPEJA7iR8A9xrBL+N5QAEIcSANa31qcMAAAAYCcFACzO7j/Esdru/4YpAIjDFACsbc1PGgAAAMBDFACwMLv/EMequ/8bpgAgDlMAsK61P21AYsI/xLF6+N9QAkAcSgBYU45PHAAAAJCcAgAWZPcf4siy+79hCgDiMAUA68n1qQMAAACSUgDAYuz+QxzZdv83TAFAHKYAYC05P3kAAABAMgoAWIjdf4gj6+7/hikAiMMUAKwj96cPWIjwD3FkD/8bSgCIQwkAa/AJBAAAABJQAMAC7P5DHHb/H2YKAOIwBQDx+RQCAAAACSgAIDi7/xCH3f/dTAFAHKYAIDafRAAAACABBQAEZvd/Tq/cvTd6CUzI7v/NTAGwyw9cT6dkCgDi8mkEAAAAElAAAAAAQAIKAAjK+D/EYfz/MI4BQByOAUBMPpEAAABAAgoACMjuP8Rh9/84pgAgDlMAEI9PJQAAAJCAAgCCsfsPcdj9P40pAIjDFADE4pMJAAAAJHBZytXoNQAs55W798rdV74/ehkAYf3g7r3RS+Bg8gREYQIAAvnCxXdHLwE4kPH/8zgGAHF87/lvjF4CcCCfTgAAACABBQAEYfcf4rD7X4cpAIjDFADE4BMKAAAAJKAAAAAAgAQUABCA8X+Iw/h/XY4BQByOAcD8LkcvAGBVvgqQUX7t6rer/aw/vvj9aj8LDuUrAAHauHj2L17yxZ0wMbv/sSkAcum5+18z5J+qZznw5D+91O13MZ4CILY3PPG20UsA9jABAACTmyHs77JrXSYGAGBeCgAAmMysgf8Q19euEACAeTgCABMz/h+fIwB5nDv+Hzn0H+rcMsAxgDwcAYjPMQCY02UR/2FeF6MXwLncCJCbZAj927b/viYD2Ef4X4SMAVNyBAAAOsoW+vdRBgBAfwoAAOhA8N9v89goAgCgrYtnv+QeADCjL9xx/n8VjgCsb9/5f6H/dPvKAPcBWJ8jAOt4w0+5DwDMxgQAQGPuA5CP4H8+UwE5Cf8AbSkAAKASwb8+RQAA1OMIAEzI+P96TACs65VyR/Dv6I8vft8xgIWZAFiPYwAwFxMAAHCiX736r6OXkM6vXf12KU+U8tXn//vopQBAOLvvWgRAVa/Y1VqO8D/Wzz/xu6OXQGV2/wHaMwEAAEcQ/OexKQFMAwDAYdwDACbj/P+63AcgtnDB/4l3nf8znn/2/J/RkSIgNhMA63IfAJiHAgAmowBYlwIgrmnDf42Qf6pJywElQFwKgHUpAGAeCgCYjAJgbUqAeKYK/yMD/20mKgSUAPEI/2tTAMA8FAAwGQXA2hQAcUwR/BsE/qc/8cmnr/+zpz7y4aeq/6IJCgFFQBwKgLUpAGAeCgCYiPC/PgVADEPDf6Nd/l3B/7omRUApQ8sAJUAMCoD1KQFgDgoAmIgCIAclwNyGhP/Go/2HhP+NZiXAxoAyQAkwN+E/BwUAzEEBABNRAOSgAJjTisG/lOPC/0bzEqAURQCvUQDkoACAOVxK/wBk1z38z3wzv142j0HHIuDnn/hdJQAMInPAHO6MXgDwqi/a/Ychuob/J97VNfyfsvt/zr93ks6Pyc8/8bvdfhfwwPe/+Y3RSwCKAgCgu1eMu06jW/jvHHJD6vgYKQHmYfwfoC8FAAApdQn/gv/xOj1mSgAAMrocvQAAuNHl/eo/8ldf+W/Vf+ZDhP7zdbhHwM8/8bvlYy98tPrP/eAPfqX6zwSAGhQAAAO8cveebwMopUm4v43wH8wT72paAvzWT/5h9RLgzy4/c+ufURIY/wcY4eLvfA0gDOcGgDmlKQAGhPx9mob/SYP/tF8DeIqGRUCLSYBTZSkHFAA53fN1gDCUCQCAQZacApgo7F+XMfwvp+E0QItJgFPtmiBYrRQQ/gHGMAEAEzABkFf4AmDiwL+tWfgPEvyPmQKYdvf/ukZFwCwlwG2iFwIKgLxMAMBYCgCYgAIgr3AFQJDAvy17+N84pAQIE/43kpcA26IVAgqAvBQAMJYCACagAMht6hIgYODfJvw/alcREC74b1MC7DRzISD856YAgLEUADABBUBu0xUAwUP/RpPwHzj4L69BERC9BNiYrQxQAOSmAICxFAAwAQUAQ0uARQL/NuE/KSXAQUYWAsI/CgAYSwEAgwn/lDKgAFgw9G8I/1sef/L0f/fFZ+qtoyclwFF6lwEKAEpRAsBIvgYQIJOFg38zEcL/OUH/2J85ezHQ8KsCV7T5ysHZjgkA0IYJABjMBAAbzaYAEoX+6rv/s4b/FoH/VLMWApVLgJWnAK5rVQbY/WfDBACMowCAwRQAbFQvABIF/1IShP+ZQv8+s5UBSoCz1C4CFABsKABgHAUADKYAYNvZJUCy0L+xdPiPEPyvm6kIUAJUcW4ZIPyzTQEA47gHAMAKkgb/JmYI/xFD/7bt9Y8uA9wToAr3CgBYgwkAGMwEANcdNQUg+Nfd/R8d/qMH/5uMLgIqlgBZpwC2HVME2P3nOhMAMI4CAAZTAHDdrQWA0P+aZcL/ysH/upFFgBKgidvKAAUA1ykAYJw7oxcAwIEu7wv/W4T/oEb+fSs+z7/1k39Y7WdF92eXn3ntiAAAc1MAwEB2/9nlleu7ZYJ/W6PC/+NP5gv/GyP/7qOPeSxsVxFg959dvv/Nb4xeAqSlAACYleC/V/W7/veWNfhfF/xxMAWwm4kAgHkpAABmdNftWbrovRucedd/nxGPiSmALv7s7p+PXgIA1ygAACZyt3yv3C3fG72MqVXb/R8R/tkvaAlgCuBmny6fKp8unxq9DAB+RAEAMIGdwf/iYsxiJib8L04JsI5r1y9FAMAcLkcvACAzu/2LE/yPt3nMRn5dIM1sSoD3lw8MXglATiYAAAY5KPybAnhNuN1/4f88vR4/UwD1HXDdMg0AMIYCAKCzo8/5KwHqEf5jCVYCUI66XjkWANCfAgCgEzf4O12or/0T/usK9HiaAjiNIgCgHwUAQAdnB39TAOfrscsbKKyG0uNxNQVwvjOvU0oAgPYUAAAN2fU/X5Xdf+E/viAlgCmA85gGAGhLAQDQSPXgbwpgXsJ/Hx7neVW+PikBANpQAABUZte/nhC7/0JpX60fb1MA0zANAFCfAgCgoubB3xQAMJvG1yUlAEA9CgCASrrt+isBDmf3f00BpgDS6HQ9UgIA1KEAADiTkf82pv/qP+F/rMkff8cA6nMkAOB8CgCAMwwL/qYAbtdyF3fy8JlGy+fBFMDtBl2HlAAAp1MAAJzIrn870+/+wwFMAbSjBAA4jQIA4EjTjPybAtjP7n8epgDGmOD640gAwPEUAABHmCL4b5vgQ3gqwv+cPC99TXbdUQIAHE4BAHCg6cL/os4e/7drS01nvp4cA+hDCQBwmMtyNXoJkJj3Xxh3LyYO/xcXpVx5MTVnl3lujz9ZyovPjF7F+ibb/d/26fKp8v7ygdHL4FD+swVDmAAAuMHdi+/NHf43Jv5Q3lWr3X/hP4ZWz5OpklcFuM64LwDAzS5HLwBgViGC/2Ja3v3/6U988unr/+ypj3z4qWa/kKn1fD381k/+YfnYCx9t8aPZwzQAwG4Xf/fFlwzgwCBfvPPd0Utgj7DhP/hRgBbn/3cFvetuDH52/+O54SjAya+H5589a0nhC4AAu/+7KAHmde8tbxu9BEjJEQCAa8KG/1LCfkiv4sTwf8yfI7azXg+ZjwEEvq44DgDwMAUAwJbQ4X8j6If12uP/x4b6nX/e7n9MO563Kq+HM4T9NoCg15NtSgCABxQAMND77v/Y6CWwZYnwD8AjlABzMf4P4ygAAMqC4X+BXbujXBvPPnX31lGANVV7PWQ7BrDYdUQJAKAAAFgv/G8s9uG9O+P/sXn+zrPo9UMJAGSnAABSWzb8bwT5EN/y6/9gFmHuAxDkunEqJQCQ2eXoBQCMsnz453QL7h6/+PQf3PpnHn/qNzuspKPHn7zxKwHJ69PlU74iEEhJAQCklCr8X1yUcnU1ehXtZDuXfYRDQv++P79cGVDLE+8q5flnR6+incV3/7cpAYCMHAEA0kkV/jcSfagvpZSnPvLhp3r+e7N58ek/ODr8t/gZs8j+ejhYsutEKY4DAPkoAIBUUob/jYQf7k8SePy/RWgPXwQEfj67Snx9UAIAmSgAgDRSh/+NCT/kt7oB4LG7t9F3e1uH9NAlQJnn9TDljQAnvC70pgQAslAAwGDvu/9jo5eQgvC/qFvO/x8a4oT/uX5PK9VeD+47sSQlQB/33vK20UuA1C7+7osvLXxnKIjhi3e+O3oJSxP+d5jopoBnTQAcEcSe/sQnn77+z3YGvWAj4yNCebgbBO74JoCDXw/7nHEjwI+98NGT/93q7P4/wo0B21IAwFgKAJiAAqAd4f8Gk5QAvQqAgwj/B1uhBDjLCgWA8L+XEqAdBQCM5QgAsCzh/xY+/Ic2ehx/9O/nTN7/N3IcAFiVAgBYkvB/ICEgpFnC9yzr4Eje9wdRAgArUgAAyxH+jyQMQB7e70dRAgCrUQAASxH+TzQoFLT6CsCVzbbrPtt6Ihj2VYDC/0mUAMBKFAAwAV8FyBSihQNfxcZI0V5/0d7fLMkNAGE8BQCwDLv/FWQOCQG+AWDW3fZZ1/WQAM9vM5nf15WYAgBWoQAAliD8VyQswDq8n6tRAgArUAAA4Qn/DQgNEJ/3cXVKACA6BQAQmvDfkPAwldnH7GdfXzrev80oAYDIFAAwCTcCZEpCBMTjfcuE3AAQ5qAAAMKy+9+JMAFxeL92YQoAiEoBAIQk/HcmVMD8vE+7UgIAESkAgHCE/0GEC5iX9+cQSgAgmsurcjV6DcCPvPf+Y+VLd14evQzY7+KilCv/3YCZXAn/Q7ki3u7eW95aZA6YgwkAIBS7/xMQNmAawv94pgCASBQAQBjC/0SEDhhO+J+HEgCIQgEAhCD8T0j4gGGE//koAYAIFAAwmffef2z0EuBwQkg3jz/1m6OXcKPZ17cS4Z9I7r3lraOXAGxRAADTs/s/uYsLRQB0cHVxIfxPzhQAMDsFADA14T8QwQSaEfzjUAIAM1MAAFBP5JDy4jOjV3CrWcfsZ13XQwI8v/sI/wDUogCACbkPwKvs/gfVK6w8/2yf3wO7dHr9Cf8xmQJ4lfP/MB8FADAl4T+4A+8L8Cd3/0eHxaxltt322dYTwcde+Oitf8Z5//iUAMCMFAAAtCPAwNEEfwBaUQDApDIfA7D7vxhhprpZdt1nWcdKhP+1ZJ4CMP4Pc1IAANCerwqsbnT4Hv37V2PkH4AeFADAVOz+L272gBPsTvGjQni48D/58yr4ry3zFAAwHwUAMA3hPwlhp6reYTxc+J+c8J+DEgCYhQIAJpb5PgAsrtaRAF8FWErpF8qF/x+p8Loz8s/KnP+HeSkAgCnY/U/q4sJXAVbSOpwL/3V87IWPCv5JmQIAZnA5egEAJDdbGHrxmVIef3L0Kk6yCekvPv0H1X9mWJOd/xf+ARjJBABMLsMxALv/UNfjT/3m2cG9xs8AHpZhCsD4P8zNBAAAsT3/bClPvGv0Kqa0HeAPmQoQ+A/gvhMABKYAgADee/+x8qU7L49eRhN2/5lS4GMA+6QM95ON/0Mpr04BvL98YPQymrD7D/NzBAAYRvhn409e/z9HLwGa+98v/qfRS2ASGY4CAHNSAADALnaPY/P8AcAjFAAQxGo3A7T7T1XOZdOD1xkVrTYFYPwfYlAAAAAAQAIKAAhklSkAu//sMuV9AIyRxzTh8+b8P7usMgVg9x/iUAAAsAbj2bTk9QXAAhQAQFd2/wlnwt1kbuD5IphVpgCAGBQAEMwqxwBglymPAcCZjP+zMuP/EIsCAIB1tBrTtqscQ6vnyfg/AIu4LFejlwAc670/fKx86XUvj17G0Yz/E9qLz5Ty+JOjV8E+ShoC+3T5VHl/+cDoZRzt3pvfWmQJiMUEAABTOfsYgN1aajrz9WT8H4CZKAAgqPf+MNa9AOz+swS7zHPyvLCAaDcDvPdmZ/8hIgUAAOtpOQUgbM6l5fNhmgSAxSgAgObs/nMs3wbACoz/c6xoUwBAPAoACCzaMQDoyhTA+uz+wxDG/yEuBQAAU5p+CkAJMNbkj7/dfwBmpACA4GafAjD+z1Ctd3EnD6HLav242/1noNmPAdj9h9gUAAAAAJCAAgAWMOsUgN1/zlXlGIApgLUE2P03/s+5Zp0CsPsP8SkAAOBcSoA+PM4AcBYFACxi1ikAONcnX/975/+QHme6hdO2ejy+FV4nL1z+5woLgfnY/Yc1KABgITOVAMb/qeF+uV/vhykB4goS/jd+46feXO1nkddMxwCEf1iHAgCA6VWZAuhFCVBXoMfT7j8As1MAwGJmmAKw+08NVXf/N3p9vVug0Dq1Xo9jg9eFKQBqmGEKwO4/rEUBAEAI1aYAlAAxBAv/dv8BiEABAAuaYQoAKK+GWEXAcTxmMA27/7AeBQBQlfF/atg3/h9uCmBDoD1M78ep8e6/YwDUMMMxAGAdF3/7hW9fjV4E0MaXXvdy99+pAKCG287/f/hff6fOL3riXXV+zo88/YlPPn39nz31kQ8/9dr/8fiTVX/fUrbC/62PYw2dRv8//s1vVfk95Pb+8oHuv9PuP6xJAQCL610CKACooVsBUEqVEmBXYL1OEbDHLcH/uipFQMUJEAUAPfQuAIR/WJcjAACEM9PXAh4SWh/5c44EvOrI8H/Mn+vBjf8AiEYBAIvreUNAu//U0OTr/25yxm7wsWH0kRIgaxFw7e9+1uN4rM73f3AfAGroeR8Au/+wNgUAACFVnQLofVPAbdlKgJF/346j/wAwIwUAJOBrAVnVyBLg1F3onf9ehmmAPX/Hqo/jTYR/uJXdf1ifAgCSaF0CGP+nhlPG/5eZBChlzSJghr/T4PDvGAA1tD4GIPxDDpejFwAAU3n+2epfD3i07cAc8RsDRgf+baNLHQCYiAkASMRRAFZV/VsBZgqNM+ygH2q2tVZ+Ho3+syq7/5CHAgCSUQKwqqVLgFIehOuZAnYp865L+IeDCP+Qy8XffuHbV6MXAfT1pde9XPXnOf9PDbW+/u/D//o7VX7Oa244DnDKDeye+siHnzprPbv0PCbQIOhXfxwnDf8f/+a3qvwccnt/+UDVn6cAgFzcAwASeu8PH6teAsCyZrgnwG32hfJzioHZdvQPNdvkBkxM+Id8TABAYrVKABMA1FBrAqCUBlMApewtAY7ZvW6y+7+IKo9jg/Bfc/TfBAA11JoAEP4hJ/cAgMTcD4BVVb8fQCl7w+WhoV74v9nZj+Pk4R9mIvxDXiYAILlzpwDs/lNDzd3/bU0mAUo5ahpA8D/eUY9jo5H/VuHfFAA1nDsFoACAvBQAwFklgAKAGloVAKX0LwHoKFj4L0UBQB3nFADCP+TmCADgKABLa3IcoBQ3mxstYPiH0YR/QAEAlFKUAKytaQmgCOir4WMu/LMy4R8oRQEAnMH4PzW0HP/f1qwEKEUJ0EvDx7lX+P+Nn3pzl9/D2j5dPjV6CUBQCgDgNaYAWF3zEkAR0Ebjx9bOP6uz+w9sKACAhygBWF3TEqAUJUBtjR9P4Z/VCf/ANgUA8AglAKvrUgIoAs7T4TEU/lmd8A9cpwAAdlICsLrmJUApioBTdHrMhH9WJ/wDuygAgJO4ASA19LoB4D5dSoBSFAGH6PgYjQ7/bgRIDW4ECJxCAQDsZQqADLqVAKUoAnbp/JiMDv/Qg91/YJ/Lq9ErAKb2iz98rPzF615+5J+7drCST77+98qH//V3+v3CTeB94l39fudsBhQhwj8ZvP7Nb/XfaGCvy9ELAOa3rwSAlWwmARQBjQn+0Mzr7fwDt3AEADjILzoOQBJdjwRsbMbgVz0eMPDvJ/yThfAPHEIBABxMCUAWQ0qAjVXKgAn+HsI/WQj/wKEcAQCO4jgAWQw5EnDd9fA881GBiQoLwZ9MhH/gGBdf/cK33ScEOMo77n62/OnVz41eBsFdDf4KwGMMLQFuMrIQmCjwb4sU/j/+zW+NXgLB3XndZfngT/z66GUAgZgAAE7yoYvnlACk0f1bAg51UwivUQ5MGvL3iRT+4Vx3XudjPHA8Vw7gZEoAMpniSMAxgoX3cwj+ZCP8A6dy9QDOogQgm3BFwMIEfzIS/oFz+BYA4Gwfunhu9BKgu6HfFIDwT0rCP3AuVxGgCpMAZGQaoD/Bn6yEf6AGVxKgGiUAWSkC2hP8yUz4B2pxNQGqUgKQmSKgPsGf7IR/oCZXFKA6JQDZKQLOJ/iD8A/Ud/HVL3z7avQigDjecfezB/9ZJQD7XJX7o5fQnTLgdhlD/8e/+a3RS2BSx4T/D/7ErzdcCbAStSLQjEkAeMBUwH4Zgz/cxM4/0IqrC9CUEgAetv31gZnLAKEfdhP+gZYuiwMAQGNKANgtWxkg9MPNTg7/Ps8DB1IxAl0oAeBmq5YBQj8cxs4/0IMrDdDNhy6eK6W4OSDcZrsMKCVWISDww3EEf6AnVxygO9MAcJzrhUApc5QCwj6cR/gHenPVAYZQAsB5dpUC77//TCmllJ/8wf+q9nteuPwvP/rfHDKGmoR/YARXHmAYJQDUswn/pWyH9pouihIA6hD+gVFcfYCh3BcAzrMd/Nu7+NH/VATAKQR/YLQ7oxcAUMqDIgA4XN/wv+3i9j8CPET4B2agAACmoQSAw40L/xtKADiU8A/MwtUImIojAXCz8cF/myMBcBPBH5iNCQBgSqYB4FFzhf9tpgHgOuEfmJECAJiWEgAemDf8bygBYEP4B2Z1aWwPmJkjAWQ3f/Df5kgAuY0L/t5zwGFMAAAhmAYgo1jhf5tpAPKx6w9E4EoFhGEagCziBv9tpgHIQfAHIjEBAIRjGoCVrRH+t5kGYF3CPxCNqxYQkmkAVrNe8N9mGoC1CP5AVK5eQGiKAKJbO/hfpwggNsEfiM4RAGAJjgUQUa7wv82xAOIR/oEVuJIByzANQBR5g/820wDEIPgDK3FFA5ajCGBWgv8uigDmJPgDK3JlA5alCGAWgv8hFAHMQfAHVuYeAMDy3B+AkYT/Y7k/AOMI/8DqXOWAFEwD0Jvgfw7TAPQl+ANZXHz18y/6rytwlHe8/nOjl3A2RcB4V+X+6CU0Ifi3sOZHlY9/81ujl5DeCsH/g2/6tdFLAAKJf9UDOIGJAGoT/FsyEUBdKwR/gFO4+gGpbd8fQBnAsYT+3rbvD6AM4DhCP4ACAOA1pgI4lOA/A1MBHEbwB3jAFRHgGkUA+wj+M1IEsJvgD/AoV0aAPRwPoBShPw7HAxD6AW7jKglwAFMB+Qj+kZkKyEbwBziMqyXAEUwFrE3oX42pgJUJ/QDHc+UEOJGpgHUI/hmYCliF4A9wuouvfv5F/yUEjvaO139u9BKmpAw4zlW5P+x3C/2MLAM+/s1vDfvdEQn9u33wTb82eglAMK6mABVtHxEoRSEwE4GfR11c+7/ticxC4Adow9UVoCH3DBhL6Oc47hkwktAP0J4rLUAnpgPaE/ipx3RAawI/QH+uvACDKATOJ/DTj0LgXAI/wHiuxACTUAjcTuBnHgqB2wj8APNxZQaY1PVCoJRcpYCwTyzXC4FSMpUCwj5ADL4GEDiZrwKcS8Ry4EMXz5WXf/jS6GVAV3/0wrfL/R/+YPQyjibkz8VXAAKncCUHWMSuiYHrepYEh6wHsjokTPcsCYR7gBxc7QESEcohDqEcgNrujF4AAAAA0J4CAAAAABJQAAAn+/t//fejl8ACHnvdm0YvAbr5oxe+PXoJLMANAIFTKQAAAAAgAQUAAAAAJKAAAAAAgAQUAMBZ3AeAGtwHgAyc/6cG5/+BcygAAAAAIAEFAAAAACSgAAAAAIAEFADA2dwHgBrcB4CVOf9PDc7/A+dSAAAAAEACCgAAAABI4PJq9AoAABbn8xY1eB0B5zIBAFTxdfcBoAL3AWBFn3D+nwqc/wdqUAAAAABAAgoAAAAASODibz73ouNEQDU/e+9zo5fAAl7+4UujlwBVGP+nhg/+uPF/oA4TAAAAAJCAAgAAAAASUAAAAABAAgoAoKqvf9/XAXI+XwfICpz/pwbn/4GaFAAAAACQgAIAAAAAElAAANU5BkANjgEQmfF/ajD+D9SmAAAAAIAEFABAE6YAqMEUABHZ/acGu/9ACwoAAAAASEABAAAAAAkoAIBmHAOgBscAiMT4PzUY/wdaUQAAAABAAgoAoClTANRgCoAI7P5Tg91/oCUFAAAAACSgAAAAAIAEFABAc44BUINjAMzM+D81GP8HWlMAAAAAQAIKAKALUwDUYAqAGdn9pwa7/0APCgAAAABIQAEAdGMKgBpMATATu//UYPcf6EUBAAAAAAkoAAAAACABBQDQlWMA1OAYADMw/k8Nxv+BnhQAAAAAkIACAOjOFAA1mAJgJLv/1GD3H+hNAQAAAAAJKACAIUwBUIMpAEaw+08Ndv+BERQAAAAAkIACABjGFAA1mAKgJ7v/1GD3HxhFAQAMpQSgBiUAPQj/1CD8AyMpAAAAACABBQAwnCkAajAFQEt2/6nB7j8wmgIAAAAAElAAAFMwBUANpgBowe4/Ndj9B2agAAAAAIAEFADANEwBUIMpAGqy+08Ndv+BWSgAgKkoAahBCUANwj81CP/ATBQAAAAAkIACAJiOKQBqMAXAOez+U4Pdf2A2CgAAAABIQAEATMkUADWYAuAUdv+pwe4/MCMFADAtJQA1KAE4hvBPDcI/MCsFAAAAACSgAACmZgqAGkwBcAi7/9Rg9x+YmQIAmJ4SgBqUANxE+KcG4R+YnQIAAAAAElAAACGYAqAGUwDsYvefGuz+AxEoAIAwlADUoARgm/BPDcI/EIUCAAhFCUANSgBKEf6pQ/gHIlEAAAAAQAIKACAcUwDUYAogN7v/1GD3H4hGAQCEpASgBiVATsI/NQj/QEQXf/O5F65GLwLgVD977/Ojl8ACXv7hS6OXQCfCPzV88Mf/4+glAJzEBAAAAAAkoAAAQvv69//d6CWwAEcBcrD7Tw12/4HIFABAeEoAalACrE34pwbhH4hOAQAsQQlADUqANQn/1CD8AytQAADLUAJQgxJgLcI/NQj/wCoui+8AAFbimgZsc02gBq8jYBEmAIClmAKghsfumAJYwSe+Zfef89n9B1aiAACWowSgBiVAbMI/NQj/wGoUAMCSlADUoASISfinBuEfWJECAFiWEoAalACxCP/UIPwDq1IAAEtTAlCDEiAG4Z8ahH9gZQoAYHlKAGpQAsxN+KcG4R9YnQIASEEJQA1KgDkJ/9Qg/AMZKACANJQA1KAEmIvwTw3CP5DFxVc++8LV6EUA9PTOe58fvQQW8PL9l0YvIT3hnxo+IPwDiZgAANL5mkkAKjAJMJbwTw3CP5CNAgBISQlADUqAMYR/ahD+gYwUAEBaSgBqUAL0JfxTg/APZKUAAFJTAlCDEqAP4Z8ahH8gMwUAkJ4SgBqUAG0J/9Qg/APZKQAAihKAOpQAbQj/1CD8AygAAF6jBKAGJUBdwj81CP8Ar1IAAGxRAlCDEqAO4Z8ahH+ABxQAANcoAahBCXAe4Z8ahH+AhykAAHZQAlCDEuA0wj81CP8Aj1IAAOyhBKAGJcBxhH9qEP4Bdrv4ymdfuBq9CIDZvfPe50cvgQW8fP+l0UuYluBPDYI/wM1MAAAcwDQANZgG2E34pwbhH+B2CgCAAykBqEEJ8DDhnxqEf4DDKAAAjqAEoAYlwKuEf2oQ/gEO5x4AACdyXwBqyHhfAMGfGgR/gOOZAAA4kWkAasg2DSD8U4PwD3AaBQDAGZQA1JClBBD+qUH4BzidIwAAlTgSQA0rHgkQ/KlB8Ac4nwkAgEpMA1DDatMAwj81CP8AdSgAACpSAlDDKiWA8E8Nwj9APY4AADTiSAA1RDwSIPhTg+APUJ8JAIBGTANQQ7RpAOGfGoR/gDZMAAB0YBqAGmaeBhD8qUHwB2jLBABAB6YBqGHWaQDhnxqEf4D2TAAAdGYagBpmmAYQ/KlB8AfoRwEAMIgigBpGFAGCPzUI/gD9OQIAMIhjAdTQ+1iA8E8Nwj/AGCYAACZgGoAaWk4DCP7UIPgDjKUAAJiIIoAaahYBgj81CP4Ac1AAAExIEUAN5xQBgj81CP4Ac3EPAIAJuT8ANZx6fwDhnxqEf4D5mAAAmJxpAGo4ZBpA8KcGwR9gXgoAgCAUAdSwqwgQ/KlB8AeYnwIAIBhFADW8fP8lwZ8qBH+AOBQAAIEpAzjWrvtLfOo7/2fASohM6AeISQEAsABFALc55MaSigBuI/gDxKYAAFiIIoDrTvlGCUUA1wn+AGtQAAAsShmQV82vkVQG5CX0A6xHAQCwOEVAHjWD/3WKgDwEf4B1KQAAElEGrKdl6N9HGbAeoR8gBwUAQEKKgPhGBP/rFAHxCf4AuSgAAJJTBsQxQ+jfRxkQh9APkJcCAICHKATmMXPgv41CYB4CPwAbCgAA9lIG9Bc59O+jDOhP6AdgFwUAAAdTCNS3YuC/jUKgPoEfgEMoAAA4mULgeBkD/20UAscT+AE4hQIAgGoUAo8S+I+nEHiUwA9ADQoAAJrKVAoI++1kKgWEfQBaUQAAMEzEckDIn0/EckDIB2AEBQAAU+tZEgj36+pZEgj3AMzq4iv/VwEAAAAAq7szegEAAABAewoAAAAASEABAAAAAAkoAAAAACABBQAAAAAkoAAAAACABBQAAAAAkIACAAAAABJQAAAAAEACCgAAAABIQAEAAAAACSgAAAAAIAEFAAAAACSgAAAAAIAEFAAAAACQgAIAAAAAElAAAAAAQAIKAAAAAEhAAQAAAAAJKAAAAAAggcur0SsAAAAAmjMBAAAAAAkoAAAAACABBQAAAAAkoAAAAACABBQAAAAAkIACAAAAABJQAAAAAEACCgAAAABIQAEAAAAACSgAAAAAIAEFAAAAACSgAAAAAIAEFAAAAACQgAIAAAAAErgs5Wr0GgAAAIDGTAAAAABAAgoAAAAASEABAAAAAAkoAAAAACABBQAAAAAkoAAAAACABBQAAAAAkIACAAAAABJQAAAAAEACCgAAAABIQAEAAAAACSgAAAAAIAEFAAAAACSgAAAAAIAEFAAAAACQgAIAAAAAElAAAAAAQAIKAAAAAEjgzrv/w5svRi8CAAAAaMsEAAAAACSgAAAAAIAEFAAAAACQgAIAAAAAErgspZRyNXgVAAAAQFMmAAAAACABBQAAAAAkoAAAAACABBQAAAAAkMCdUkp59y+9+WL0QgAAAIA23v1Lb74wAQAAAAAJKAAAAAAgAQUAAAAAJKAAAAAAgAQUAAAAAJCAAgAAAAASeK0A8FWAAAAAsJ5N3jcBAAAAAAkoAAAAACABBQAAAAAkoAAAAACABBQAAAAAkMBDBYBvAgAAAIB1bOd8EwAAAACQgAIAAAAAElAAAAAAQAIKAAAAAEjgkQLAjQABAAAgvuv53gQAAAAAJKAAAAAAgAQUAAAAAJDAzgLAfQAAAAAgrl253gQAAAAAJKAAAAAAgAQUAAAAAJDA3gLAfQAAAAAgnn153gQAAAAAJKAAAAAAgAQub/p/XvVaBQAAANDUjRMA73EfAAAAAAjjphzvCAAAAAAkoAAAAACABG4tABwDAAAAgPndlt9NAAAAAEACCgAAAABI4KACwDEAAAAAmNchud0EAAAAACSgAAAAAIAEDi4AHAMAAACA+Rya100AAAAAQAIKAAAAAEjgqALAMQAAAACYxzE53QQAAAAAJKAAAAAAgASOLgAcAwAAAIDxjs3nJgAAAAAgAQUAAAAAJHBSAeAYAAAAAIxzSi43AQAAAAAJnFwAmAIAAACA/k7N4yYAAAAAIAEFAAAAACRwVgHgGAAAAAD0c04ONwEAAAAACVTZwf+rP//WVY2fAwAAAOz2nl8+bwrfBAAAAAAkUKUAOLeFAAAAAParkbtNAAAAAEACCgAAAABIoFoB4BgAAAAA1Fcrb5sAAAAAgASqFgCmAAAAAKCemjnbBAAAAAAkUL0AMAUAAAAA56udr00AAAAAQAJNCgBTAAAAAHC6FrnaBAAAAAAk0KwAMAUAAAAAx2uVp00AAAAAQAJNCwBTAAAAAHC4ljm6+QSAEgAAAABu1zo/OwIAAAAACXTbnf+rP//nq16/CwAAACJ5zy+/pXk+NwEAAAAACXQrAHq0GQAAABBNr7xsAgAAAAAS6FoAmAIAAACAB3rm5O4TAEoAAAAA6J+PHQEAAACABIYUAKYAAAAAyGxELjYBAAAAAAkMKwBMAQAAAJDRqDw8dAJACQAAAEAmI3OwIwAAAACQwPACwBQAAAAAGYzOv8MLgFLGPwgAAADQ0gy5d4oCAAAAAGhrmgJghjYEAAAAapsl705TAJQyz4MCAAAANcyUc6cqAAAAAIA2pisAZmpHAAAA4FSz5dvpCoBS5nuQAAAA4Bgz5topC4BS5nywAAAA4Daz5tlpCwAAAACgnqkLgFlbEwAAANhl5hw7dQFQytwPHgAAAGzMnl+nLwBKmf9BBAAAILcIuTVEAQAAAACcJ0wBEKFNAQAAIJ8oeTVMAVBKnAcVAACAHCLl1FAFQCmxHlwAAADWFS2fXo5ewCmuRi8AAAAAggk3AVBKKb8QrGUBAABgLRFzacgCoJSYDzYAAADxRc2jYQuAUuI+6AAAAMQUOYeGLgBKif3gAwAAEEf0/Bm+ACgl/pMAAADA3FbInUsUAKWs8WQAAAAwn1Xy5jIFQCnrPCkAAADMYaWcuVQBAAAAAOy2XAGwUjsDAADAOKvly+UKgFLWe5IAAADoa8VcuWQBUMqaTxYAAADtrZonly0ASln3SQMAAKCNlXPksn+xbV/+zD9fjV4DAAAAc/uFX1k3/Jey+ATAxupPIgAAAOfJkBtTFACl5HgyAQAAOF6WvJimACglz5MKAADAYTLlxFQFQCm5nlwAAAD2y5YP0xUApeR7kgEAAHhYxlyYsgAoJeeTDQAAQN48mLYAKCXvkw4AAJBV5hyYugAoJfeTDwAAkEn2/Jf6L3/dlz/zz1ej1wAAAEBd2YP/RvoJgG1eFAAAAGuR8x5QAFzjxQEAALAG+e5hCoAdvEgAAABik+sepQDYw4sFAAAgJnluNwXADbxoAAAAYpHj9lMA3MKLBwAAIAb57WYenCP4mkAAAID5CP6HMQFwBC8qAACAuchph1MAHMmLCwAAYA7y2XE8WGdwJAAAAKA/wf80JgDO4EUHAADQlxx2OgXAmbz4AAAA+pC/zuPBq8iRAAAAgPoE/zpMAFTkRQkAAFCXnFWPAqAyL04AAIA65Ku6PJgNORIAAABwPMG/DRMADXnRAgAAHEeOascD24lpAAAAgP0E//ZMAHTixQwAALCbvNSHB3kA0wAAAACCf28mAAbwIgcAALKTi/rzgA9mGgAAAMhE8B/HAz8JRQAAALAywX88RwAm4c0AAACsSt6ZgydhQqYBAACAFQj+c/FkTEwRAAAARCT4z8mTEoAiAAAAiEDwn5t7AATgTQQAAMxObpmfJygY0wAAAMBMBP84PFFBKQIAAICRBP94PGHBKQIAAICeBP+4PHGLUAQAAAAtCf7xeQIXowgAAABqEvzX4YlcmDIAAAA4hdC/Jk9qAooAAADgEIL/2jy5iSgCAACAXQT/HDzJSSkDAAAgN6E/H094cooAAADIRfDPyxPPa5QBAACwJqGfUhQA7KEMAACA2IR+rvOC4FbKAAAAiEHo5yZeHBxFGQAAAHMR+jmUFwonUwYAAMAYQj+n8KKhCmUAAAC0JfRzLi8gmlAIAADAeQR+avOCoguFAAAA3EzgpzUvMIZQCAAAkJ3AT29ecExDKQAAwKqEfWbgRcj0FAMAAEQh6DMzL05CUw4AANCbkE9U/x8SKZvcmmqLmAAAAABJRU5ErkJggg==" alt="Everbloom">
-        </div>
-        <h1>Everbloom Support</h1>
-        <p>A gentle space for your questions</p>
-        <p class="tagline">breathe in · be heard · bloom</p>
-    </div>
-
-    <div class="container">
-
-        <div class="divider"></div>
-
-        <div class="crisis-card">
-            <h2>🕊 In Crisis Right Now?</h2>
-            <p>Everbloom is a wellness companion, not a substitute for professional care. If you are in immediate danger or experiencing a mental health crisis, please reach out to a crisis line right now.<br><br>
-            <strong style="color:#c09090">US:</strong> Call or text <a href="tel:988">988</a> — Suicide &amp; Crisis Lifeline<br>
-            <strong style="color:#c09090">International:</strong> <a href="https://findahelpline.com" target="_blank">findahelpline.com</a></p>
-        </div>
-
-        <div class="contact-card">
-            <h2>We're here for you</h2>
-            <p class="sub">Have a question, found a bug, or just want to share feedback?<br>We usually respond within 24 hours.</p>
-            <a class="btn" href="mailto:burakcak2000@gmail.com">Send us a message</a>
-        </div>
-
-        <div class="card">
-            <h2>Frequently Asked Questions</h2>
-
-            <div class="faq-item">
-                <h3>How do I cancel my subscription?</h3>
-                <p>Open your iPhone Settings → tap your name at the top → Subscriptions → Everbloom → Cancel Subscription. Your access continues until the end of the billing period.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>How do I restore my purchases?</h3>
-                <p>Open Everbloom → go to the Premium screen → tap "Restore Purchases". Make sure you're signed in with the same Apple ID used to purchase.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>The voice guidance isn't playing — what do I do?</h3>
-                <p>Check that your phone is not on silent mode. Go to Settings → Everbloom and confirm audio and notification permissions are enabled. An internet connection is required for voice guidance.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Is my journal private?</h3>
-                <p>Yes. Your journal entries are stored securely and are only accessible to you. We never share your personal data with third parties.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Can I use Everbloom offline?</h3>
-                <p>Breathing exercises are available offline. Voice guidance, Bloom AI chat, and the therapist finder require an internet connection.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Is Everbloom a replacement for therapy?</h3>
-                <p>No — Everbloom is a wellness support tool, not a medical device or therapy service. We warmly encourage all users to seek professional mental health support when needed.</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>About Everbloom</h2>
-            <p>Everbloom is a personal anxiety and panic support companion designed to help you find calm in moments of stress and build long-term emotional resilience. Our tools are grounded in evidence-based techniques including CBT, mindfulness, and breathwork — offered with warmth, and without judgment.</p>
-        </div>
-
-    </div>
-</div>
-
-<footer>
-    <p>© 2026 Everbloom &nbsp;·&nbsp; <a href="mailto:burakcak2000@gmail.com">Contact Support</a></p>
-</footer>
-
 </body>
 </html>
